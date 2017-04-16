@@ -82,7 +82,16 @@ function initialize() {
       var infos = make_info(data);
 
       //FIXME : set to blue the republican dministration and red the liberal one
-      var pinImage = new google.maps.MarkerImage((data.timestamp < 1232482439 ? "./img/bomb_blue.png" : "./img/bomb_red.png")); //bush vs obama administration //"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + defaultMarkerColor);
+      var administration = null;
+      if (data.timestamp < 979945200)//clinton administration
+        administration = "./img/bomb_red.png";
+      else if (data.timestamp > 979945200 && data.timestamp < 1232406000)//bush administation
+        administration = "./img/bomb_blue.png"; //republican
+      else if (data.timestamp > 1232406000 && data.timestamp < 1484866800)//obama administration
+        administration = "./img/bomb_red.png";
+      else //trump administration
+        administration = "./img/bomb_blue.png";
+      var pinImage = new google.maps.MarkerImage(administration);
 
       // marker object for the marker
       var marker = new google.maps.Marker({
