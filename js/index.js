@@ -66,7 +66,7 @@ function initialize() {
     var myOptions = {
       center: new google.maps.LatLng(markers[0].Latitude, markers[0].Longitude),
       zoom: 5,
-      mapTypeId: google.maps.MapTypeId.ROADMAP, //'satellite', 
+      mapTypeId: google.maps.MapTypeId.HYBRID, 
       disableDefaultUI: true
     };
 
@@ -83,8 +83,6 @@ function initialize() {
 
       var infos = make_info(data);
 
-      // initial icon
-      var defaultMarkerColor = 'ff0000';
       //FIXME : set to blue the republican dministration and red the liberal one
       var pinImage = new google.maps.MarkerImage((data.timestamp < 1232482439 ? "./img/bomb_blue.png" : "./img/bomb_red.png")); //bush vs obama administration //"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + defaultMarkerColor);
 
