@@ -35,6 +35,15 @@ function filter_conditon_and(rules, data) { //rules is a list of rules
         case "NB_KILLED":
             result_current_rule = filter_killed(current_rule, data);
             break;
+        case "NB_INJURED":
+            result_current_rule = filter_injured(current_rule, data);
+            break;
+        case "NB_KAMIKAZES":
+            result_current_rule = filter_kamikaze(current_rule, data);
+            break;
+        case "TARGET_TYPE":
+            result_current_rule = filter_target_type(current_rule, data);
+            break;
         default: //undefined --> new group of rules
             if (current_rule.condition == "AND")
                 result_current_rule = filter_conditon_and(current_rule.rules, data);
@@ -64,6 +73,15 @@ function filter_conditon_or(rules, data) { //rules is a list of rules
             break;
         case "NB_KILLED":
             result_current_rule = filter_killed(current_rule, data);
+            break;
+        case "NB_INJURED":
+            result_current_rule = filter_injured(current_rule, data);
+            break;
+        case "NB_KAMIKAZES":
+            result_current_rule = filter_kamikaze(current_rule, data);
+            break;
+        case "TARGET_TYPE":
+            result_current_rule = filter_target_type(current_rule, data);
             break;
         default: //undefined --> new group of rules
             if (current_rule.condition == "AND")
@@ -97,6 +115,26 @@ function filter_religion(r, data) {
     }
 }
 
+function filter_target_type(r, data) {
+    if (r.operator == "equal") {
+        target_type = r.value.split(',');
+        for (var i = 0; i < target_type.length; i++) {
+            if (target_type[i] == data.target_type)
+                return true;
+        }
+
+        return false;
+    } else { //not equal
+        target_type = r.value.split(',');
+        for (var i = 0; i < target_type.length; i++) {
+            if (target_type[i] != data.target_type)
+                return true;
+        }
+
+        return false;
+    }
+}
+
 function filter_year(r, data) {
     if (r.operator == "less")
         return (parseInt(r.value) > new Date(parseInt(data.timestamp) * 1000).getUTCFullYear());
@@ -111,105 +149,16 @@ function filter_killed(r, data) {
         return (parseInt(r.value) < parseInt(data.nb_killed));
 }
 
+function filter_injured(r, data) {
+    if (r.operator == "less")
+        return (parseInt(r.value) > parseInt(data.nb_injured));
+    else //greater
+        return (parseInt(r.value) < parseInt(data.nb_injured));
+}
 
-//some tests cases...
-r2 = {
-  "condition": "AND",
-  "rules": [
-    {
-      "condition": "AND",
-      "rules": [
-        {
-          "id": "RELIGION",
-          "field": "RELIGION",
-          "type": "string",
-          "input": "text",
-          "operator": "equal",
-          "value": "Muslim"
-        },
-        {
-          "id": "RELIGION",
-          "field": "RELIGION",
-          "type": "string",
-          "input": "text",
-          "operator": "not_equal",
-          "value": "None"
-        }
-      ]
-    }
-  ]
-};
-
-r3 = {
-    "condition":"AND",
-    "rules":[
-    {
-        "condition":"AND",
-        "rules":[
-        {
-            "id":"RELIGION",
-            "field":"RELIGION",
-            "type":"string",
-            "input":"text",
-            "operator":"equal",
-            "value":"Muslim,None"
-        },
-        {
-            "id":"YEAR",
-            "field":"YEAR",
-            "type":"double",
-            "input":"text",
-            "operator":"less",
-            "value":"2001"
-        },
-        {
-            "condition":"AND",
-            "rules":[
-            {
-                "id":"NB_KILLED",
-                "field":"NB_KILLED",
-                "type":"double",
-                "input":"text",
-                "operator":"greater",
-                "value":"3"
-            }
-            ]
-        }
-        ]
-    }
-    ]
-};
-
-r1 = {
-  "condition": "AND",
-  "rules": [
-    {
-      "id": "YEAR",
-      "field": "YEAR",
-      "type": "double",
-      "input": "text",
-      "operator": "greater",
-      "value": "2001"
-    },
-    {
-      "id": "NB_KILLED",
-      "field": "NB_KILLED",
-      "type": "double",
-      "input": "text",
-      "operator": "greater",
-      "value": "3"
-    },
-    {
-      "id": "RELIGION",
-      "field": "RELIGION",
-      "type": "string",
-      "input": "text",
-      "operator": "equal",
-      "value": "Muslim"
-    }
-  ]
-};
-
-//console.log(filter_conditon_or(r2.rules, markers[0]));
-//console.log(filter_conditon_and(r3.rules, markers[0]));
-
+function filter_kamikaze(r, data) {
+    if (r.operator == "less")
+        return (parseInt(r.value) > parseInt(data.nb_kamikaze));
+    else //greater
+        return (parseInt(r.value) < parseInt(data.nb_kamikaze));
+}

@@ -19,7 +19,8 @@ data_from_text = function(id) {
 $('#builder-basic').queryBuilder({
   plugins: ['bt-tooltip-errors'],
   
-  filters: [{
+  filters: [
+  {
     id: 'RELIGION',
     label: 'RELIGION',
     type: 'string',
@@ -54,6 +55,32 @@ $('#builder-basic').queryBuilder({
   label: "NB_KILLED",
   type: "double",
   operators: ["less", "greater"]
+},
+{
+  id: "NB_INJURED",
+  label: "NB_INJURED",
+  type: "double",
+  operators: ["less", "greater"]
+},
+{
+  id: "NB_KAMIKAZES",
+  label: "NB_KAMIKAZES",
+  type: "double",
+  operators: ["less", "greater"]
+},
+{
+  id: 'TARGET_TYPE',
+  label: 'TARGET_TYPE',
+  type: 'string',
+  plugin: 'selectize',
+  plugin_config: {
+    valueField: 'id',
+    labelField: 'id',
+    maxItems: null,
+    create: false,
+    plugins: ['remove_button'],
+    options: [{"id": "Civilian"}, {"id": "Government"}, {"id": "Law"}, {"id": "Religious"}, {"id": "Army"}, {"id": "Foreign"}, {"id": "Unknow"} ]
+  }
 }
 ],
 
