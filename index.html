@@ -15,7 +15,8 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" media="screen" />
 	<!-- google maps -->
-	<script src="http://maps.google.com/maps/api/js?sensor=true&.js"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChtIzkJ44e3WLkQpgBOPjfp6WU-C8dNk8"></script>
+	<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 	<!-- google chart -->
 	<script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
 	<!-- query selector -->
@@ -32,13 +33,41 @@
 
 	<!-- main body -->
 	<div id="builder-basic"></div>
-	<input type ="button" id="btn-get" value="Apply Rules"></input>
+	<input type ="button" id="btn-get" value="&#9654; " title="Apply filter(s)..."></input>
 	<div id="map"></div>
 	<div id="overlay" class="list-group"></div>
+	<button id="stats_button" title="See some stats...">&Sigma;</button>
+	<button id="reset_markers_location_button" title="Refresh markers positions...">&#8634;</button>
+	<div id="stats">
+		<button id="close_stats">&#735;</button>
+		<h1 style='text-align:center;'>some stats here...</h1>
+	</div>
 
 	<!-- scripts -->
 	<script src="js/index.js"></script>
 	<script src="js/query_interpreter.js"></script>
 	<script src="js/filter_gui.js"></script>
+	<script>
+	//refrehs the gps positions... and reset animation...
+	$("#reset_markers_location_button").on('click', function () {
+		for (i = 0; i < markerObjects.length; i++) {
+        	marker = markerObjects[i];
+        	marker.setPosition(new google.maps.LatLng(
+        		parseFloat(marker.data.Latitude)  + (Math.random() / 1000), //add very small random value to net get all points at the same place...
+        		parseFloat(marker.data.Longitude) + (Math.random() / 1000)
+        	));
+        	marker.setAnimation(null);
+    	}
+	});
+
+	//control the stats modal window...
+	$("#close_stats").on('click', function () {
+		$("#stats").css("display", "none");
+	});
+
+	$("#stats_button").on('click', function() {
+		$("#stats").css("display", "block");
+	});
+	</script>
 </body>
 </html>

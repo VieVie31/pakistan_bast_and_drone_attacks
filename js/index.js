@@ -52,19 +52,22 @@ function make_info(data) {
   '<td>' + data.target_type + '</td>'+
   '</tr>'+
 
+  '<tr>'+
+  '<td>' + "RELIGIOUS TARGET" + '</td>'+
+  '<td>' + data.religious_target + '</td>'+
+  '</tr>'+
+
   '</table>'+
-            '<button onclick="alert(\'TODO\');">REPLACE</button>'+ //replace the marrker to it's original position
-            '</div>'+
-            '</div>';
-          }
+  '<button onclick="alert(\'TODO\');">REPLACE</button>'+ //replace the marrker to it's original position
+  '</div>'+
+  '</div>';
+}
 
-          function initialize() {
-
-            var myOptions = {
-              center: new google.maps.LatLng(markers[0].Latitude, markers[0].Longitude),
-              zoom: 5,
+function initialize() {
+    var myOptions = {
+      center: new google.maps.LatLng(markers[0].Latitude, markers[0].Longitude),
+      zoom: 5,
       mapTypeId: google.maps.MapTypeId.ROADMAP, //'satellite', 
-
       disableDefaultUI: true
     };
 
@@ -72,9 +75,12 @@ function make_info(data) {
 
     // drop markers one by one
     var i = 0;
-    var interval = setInterval(function() {
+    for (var i = 0; i < markers.length; i++) {
       var data = markers[i];
-      var myLatlng = new google.maps.LatLng(data.Latitude, data.Longitude);
+      var myLatlng = new google.maps.LatLng(
+        parseFloat(data.Latitude)  + (Math.random() / 1000), //add very small random value to net get all points at the same place...
+        parseFloat(data.Longitude) + (Math.random() / 1000)
+      );
 
       var infos = make_info(data);
 
@@ -140,14 +146,11 @@ function make_info(data) {
 
       $row.appendTo('#overlay');
 
-      // continue iteration
-      i++;
-      if (i == markers.length) {
-        clearInterval(interval);
-      }
-    }, 0/*do not wait !!! add all marker instaltnly*/);
+    }
 
-} // initialize
+  //FIXME : filters doesn't work on maker cluster... :'(
+  var markerCluster = new MarkerClusterer(map, markerObjects, {maxZoom: 5, imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+}
 
 
 google.maps.event.addDomListener(window, 'load', initialize);

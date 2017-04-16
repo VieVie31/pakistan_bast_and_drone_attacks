@@ -39,8 +39,67 @@ table, th, td {
 }
 
 #btn-get {
-  margin-top: 0;
-  margin-right: 150px;
-  float: right;
-  width: 70%;
+  z-index: 998;
+  position: absolute;
+  bottom: 20px;
+  right: 290px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  color: white;
+  background: red;
+  font-weight: bold;
+}
+
+#reset_markers_location_button {
+  z-index: 998;
+  position: absolute;
+  bottom: 20px;
+  right: 220px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  color: white;
+  background: green;
+  font-weight: bold;
+}
+
+#stats_button {
+  z-index: 999;
+  position: absolute;
+  bottom: 20px;
+  right: 150px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  color: white;
+  background: orange;
+}
+
+#stats {
+  display: none;
+  z-index: 1000;
+  background: #eee;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .95;
+} 
+
+#close_stats {
+  background: none;
+  position: absolute;
+  top: 0;
+  right:0;
+  padding: 7px 15px 0px 15px;
+  color: #f66;
+  border: 0;
+  font-size: 3em;
+  line-height: 65px;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  z-index: 10000000000000;
 }
