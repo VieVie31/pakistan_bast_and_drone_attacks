@@ -1,16 +1,16 @@
 html,
 body,
 #map {
-    position: fixed;
-    top: 0;
-    left: 10%;//200px;
-    display: block;
-    width: 100%;
-    height: 100%;
+  position: fixed;
+  top: 0;
+  left: 10%;//200px;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 #map {
-    background: #58B;
+  background: #58B;
 }
 
 #overlay {
@@ -26,12 +26,10 @@ body,
 }
 
 table, th, td {
-    border: 1px solid gray;
-    margin: 5px;
-    padding: 5px;
+  border: 1px solid gray;
+  margin: 5px;
+  padding: 5px;
 }
-
-//////
 
 #builder-basic {
   width: 500px;

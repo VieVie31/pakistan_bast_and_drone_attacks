@@ -2,7 +2,7 @@
 $('#builder-basic').on('afterCreateRuleInput.queryBuilder', function(e, rule) {
   if (rule.filter.plugin == 'selectize') {
     rule.$el.find('.rule-value-container').css('min-width', '200px')
-      .find('.selectize-control').removeClass('form-control');
+    .find('.selectize-control').removeClass('form-control');
   }
 });
 
@@ -34,36 +34,36 @@ $('#builder-basic').queryBuilder({
     }
   },
   {
-	id: "YEAR",
-	label: "YEAR",
-	type: "double",
-	operators: ["less", "greater"],
-	validation: {
-	  callback : function(value, rule) {  
-	  	if (value > 1995 && value < 2018) 
-	  		return true;
-	  	else {
-	  		alert("Date must be between 1996 and 2017"); 
-	  		return false;
-	  	} 
-	  }
-    }
-  },          
-  {
-    id: "NB_KILLED",
-    label: "NB_KILLED",
-    type: "double",
-    operators: ["less", "greater"]
-  }
-  ],
+   id: "YEAR",
+   label: "YEAR",
+   type: "double",
+   operators: ["less", "greater"],
+   validation: {
+     callback : function(value, rule) {  
+      if (value > 1995 && value < 2018) 
+       return true;
+     else {
+       alert("Date must be between 1996 and 2017"); 
+       return false;
+     } 
+   }
+ }
+},          
+{
+  id: "NB_KILLED",
+  label: "NB_KILLED",
+  type: "double",
+  operators: ["less", "greater"]
+}
+],
 
-  operators: [
-	{ type: 'equal', optgroup: 'scalar' },
-	{ type: 'not_equal', optgroup: 'scalar' },
-	{ type: 'greater', optgroup: 'scalar' },
-	{ type: 'less', optgroup: 'scalar' },
-  ]
-  
+operators: [
+{ type: 'equal', optgroup: 'scalar' },
+{ type: 'not_equal', optgroup: 'scalar' },
+{ type: 'greater', optgroup: 'scalar' },
+{ type: 'less', optgroup: 'scalar' },
+]
+
 });
 
 $('#btn-get').on('click', function() {

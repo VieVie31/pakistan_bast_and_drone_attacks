@@ -6,62 +6,63 @@ var map;
 var markerObjects = [];
 
 function utcformat(d) {
-    d= new Date(d);
-    var tail= ' GMT', D= [d.getUTCFullYear(), d.getUTCMonth()+1, d.getUTCDate()];
-    var i= 3;
-    while(i){
-        --i;
-        if(D[i]<10) D[i]= '0'+D[i];
-    }
-    return D.join('/') + tail;
+  d = new Date(d);
+  var tail = ' GMT', D = [d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate()];
+  var i= 3;
+  while (i) {
+    --i;
+    if (D[i]<10) 
+      D[i]= '0'+D[i];
+  }
+  return D.join('/') + tail;
 }
 
 function make_info(data) {
   return '<div id="content">'+
-            '<div id="bodyContent">'+
-            '<table>'+
-              '<caption>' + data.Location + '</caption>'+
-              '<tr>'+
-                '<td>' + "DATE" + '</td>'+
-                '<td>' + utcformat(parseInt(data.timestamp) * 1000) + '</td>'+
-              '</tr>'+
+  '<div id="bodyContent">'+
+  '<table>'+
+  '<caption>' + data.Location + '</caption>'+
+  '<tr>'+
+  '<td>' + "DATE" + '</td>'+
+  '<td>' + utcformat(parseInt(data.timestamp) * 1000) + '</td>'+
+  '</tr>'+
 
-              '<tr>'+
-                '<td>' + "CITY" + '</td>'+
-                '<td>' + data.City + '</td>'+
-              '</tr>'+
+  '<tr>'+
+  '<td>' + "CITY" + '</td>'+
+  '<td>' + data.City + '</td>'+
+  '</tr>'+
 
-              '<tr>'+
-                '<td>' + "#KiLLED" + '</td>'+
-                '<td>' + data.nb_killed + '</td>'+
-              '</tr>'+
+  '<tr>'+
+  '<td>' + "#KiLLED" + '</td>'+
+  '<td>' + data.nb_killed + '</td>'+
+  '</tr>'+
 
-              '<tr>'+
-                '<td>' + "#INJURED" + '</td>'+
-                '<td>' + data.nb_injured + '</td>'+
-              '</tr>'+
+  '<tr>'+
+  '<td>' + "#INJURED" + '</td>'+
+  '<td>' + data.nb_injured + '</td>'+
+  '</tr>'+
 
-              '<tr>'+
-                '<td>' + "#KAMIKAZE" + '</td>'+
-                '<td>' + data.nb_kamikaze + '</td>'+
-              '</tr>'+
+  '<tr>'+
+  '<td>' + "#KAMIKAZE" + '</td>'+
+  '<td>' + data.nb_kamikaze + '</td>'+
+  '</tr>'+
 
-              '<tr>'+
-                '<td>' + "TARGET TYPE" + '</td>'+
-                '<td>' + data.target_type + '</td>'+
-              '</tr>'+
+  '<tr>'+
+  '<td>' + "TARGET TYPE" + '</td>'+
+  '<td>' + data.target_type + '</td>'+
+  '</tr>'+
 
-            '</table>'+
+  '</table>'+
             '<button onclick="alert(\'TODO\');">REPLACE</button>'+ //replace the marrker to it's original position
             '</div>'+
             '</div>';
-}
+          }
 
-function initialize() {
+          function initialize() {
 
-    var myOptions = {
-      center: new google.maps.LatLng(markers[0].Latitude, markers[0].Longitude),
-      zoom: 5,
+            var myOptions = {
+              center: new google.maps.LatLng(markers[0].Latitude, markers[0].Longitude),
+              zoom: 5,
       mapTypeId: google.maps.MapTypeId.ROADMAP, //'satellite', 
 
       disableDefaultUI: true
@@ -96,7 +97,7 @@ function initialize() {
 
       //the pop up containing the infos
       var infowindow = new google.maps.InfoWindow({
-          content: infos
+        content: infos
       });
 
 
@@ -117,46 +118,25 @@ function initialize() {
 
       // create a row in the overlay table and bind onhover
       var $row = $('<div>')
-        .attr('id', 'id_lst_' + data["S#"])
-        .addClass('list-group-item')
-        .html(data.Location)
-        .on('mouseenter', function() {
-          var marker = markerObjects[markerIndex];
-          marker.setAnimation(google.maps.Animation.BOUNCE);
-        })
-        .on('mouseleave', function() {
-          var marker = markerObjects[markerIndex];
-          if (marker.getAnimation() != null) {
-            marker.setAnimation(null);
-          }
-        })
-        .on('click', function() {
-          console.log("click");
-          var marker = markerObjects[markerIndex];
-          marker.setAnimation(google.maps.Animation.BOUNCE);
-          infowindow.open(map, marker);
-        });
-
-
-    /*
-      // create colorpicker and append to row
-      $cp_div = $('<a href="#" class="btn small pull-right colpick">#' + defaultMarkerColor + '</a>');
-      $cp_div.colorpicker().on('changeColor', function(ev) {
-        var color = ev.color.toHex();
-        
-        $(this).text(color);
-        
-        if (color.substring(0, 1) == '#') {
-          color = color.substring(1);
-        }
+      .attr('id', 'id_lst_' + data["S#"])
+      .addClass('list-group-item')
+      .html(data.Location)
+      .on('mouseenter', function() {
         var marker = markerObjects[markerIndex];
-        marker.setIcon("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + color);
-
-        console.log('changed color to ' + color);
-
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+      })
+      .on('mouseleave', function() {
+        var marker = markerObjects[markerIndex];
+        if (marker.getAnimation() != null) {
+          marker.setAnimation(null);
+        }
+      })
+      .on('click', function() {
+        console.log("click");
+        var marker = markerObjects[markerIndex];
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        infowindow.open(map, marker);
       });
-      $cp_div.appendTo($row);
-    */
 
       $row.appendTo('#overlay');
 
@@ -167,7 +147,8 @@ function initialize() {
       }
     }, 0/*do not wait !!! add all marker instaltnly*/);
 
-  } // initialize
+} // initialize
+
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
