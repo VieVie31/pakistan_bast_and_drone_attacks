@@ -70,8 +70,12 @@ $('#btn-get').on('click', function() {
   var result = $('#builder-basic').queryBuilder('getRules');
   
   if (!$.isEmptyObject(result)) {
-    query_json = result;
-    alert(JSON.stringify(result, null, 2));
+    filterMarkers(result);
+    //query_json = result;
+    //alert(JSON.stringify(result, null, 2));
+  } else {
+    //reset all the markers...
+    filterMarkers({"condition": "AND","rules": []});
   }
 });
 
