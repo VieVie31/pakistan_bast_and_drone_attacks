@@ -40,10 +40,10 @@ $('#builder-basic').queryBuilder({
 	operators: ["less", "greater"],
 	validation: {
 	  callback : function(value, rule) {  
-	  	if (value > 1975 && value < 2015) 
+	  	if (value > 1995 && value < 2018) 
 	  		return true;
 	  	else {
-	  		alert("Date must be between 1975 and 2015"); 
+	  		alert("Date must be between 1996 and 2017"); 
 	  		return false;
 	  	} 
 	  }
