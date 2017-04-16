@@ -1,0 +1,86 @@
+// Fix for Selectize
+$('#builder-basic').on('afterCreateRuleInput.queryBuilder', function(e, rule) {
+  if (rule.filter.plugin == 'selectize') {
+    rule.$el.find('.rule-value-container').css('min-width', '200px')
+      .find('.selectize-control').removeClass('form-control');
+  }
+});
+
+
+data_from_select = function(id) {
+  $(id).parent().attr('data-value', $(id).find(":selected").val());
+}
+
+data_from_text = function(id) {
+  $(id).parent().attr('data-value', $(id).val());
+}
+
+
+$('#builder-basic').queryBuilder({
+  plugins: ['bt-tooltip-errors'],
+  
+  filters: [{
+    id: 'RELIGION',
+    label: 'RELIGION',
+    type: 'string',
+    plugin: 'selectize',
+    plugin_config: {
+      valueField: 'id',
+      labelField: 'id',
+      maxItems: null,
+      create: false,
+      plugins: ['remove_button'],
+      options: [{"id": "None"}, {"id": "Christian"}, {"id": "Muslim"}, {"id": "Jew"} ]
+    }
+  },
+  {
+	id: "YEAR",
+	label: "YEAR",
+	type: "double",
+	operators: ["less", "greater"],
+	validation: {
+	  callback : function(value, rule) {  
+	  	if (value > 1975 && value < 2015) 
+	  		return true;
+	  	else {
+	  		alert("Date must be between 1975 and 2015"); 
+	  		return false;
+	  	} 
+	  }
+    }
+  },          
+  {
+    id: "NB_KILLED",
+    label: "NB_KILLED",
+    type: "double",
+    operators: ["less", "greater"]
+  }
+  ],
+
+  operators: [
+	{ type: 'equal', optgroup: 'scalar' },
+	{ type: 'not_equal', optgroup: 'scalar' },
+	{ type: 'greater', optgroup: 'scalar' },
+	{ type: 'less', optgroup: 'scalar' },
+  ]
+  
+});
+
+$('#btn-get').on('click', function() {
+  var result = $('#builder-basic').queryBuilder('getRules');
+  
+  if (!$.isEmptyObject(result)) {
+    query_json = result;
+    alert(JSON.stringify(result, null, 2));
+  }
+});
+
+var query_json = null;
+
+
+
+//display the box correctly
+$("#builder-basic").css("width", 1020);
+$("#builder-basic").css("margin-left", 130);
+$("#builder-basic").css("max-height", 200);
+$("#builder-basic").css("overflow-x", "scroll");
