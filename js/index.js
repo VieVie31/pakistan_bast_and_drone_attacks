@@ -58,7 +58,6 @@ function make_info(data) {
   '</tr>'+
 
   '</table>'+
-  '<button onclick="alert(\'TODO\');">REPLACE</button>'+ //replace the marrker to it's original position
   '</div>'+
   '</div>';
 }
@@ -75,7 +74,7 @@ function initialize() {
 
     // drop markers one by one
     var i = 0;
-    for (var i = 0; i < markers.length; i++) {
+    var interval = setInterval(function() {
       var data = markers[i];
       var myLatlng = new google.maps.LatLng(
         parseFloat(data.Latitude)  + (Math.random() / 1000), //add very small random value to net get all points at the same place...
@@ -146,7 +145,12 @@ function initialize() {
 
       $row.appendTo('#overlay');
 
+    // continue iteration
+    i ++;
+    if (i == markers.length) {
+      clearInterval(interval);
     }
+  }, 0);
 
   //FIXME : filters doesn't work on maker cluster... :'(
   var markerCluster = new MarkerClusterer(map, markerObjects, {maxZoom: 5, imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
