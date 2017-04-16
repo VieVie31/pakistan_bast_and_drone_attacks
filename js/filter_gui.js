@@ -31,7 +31,7 @@ $('#builder-basic').queryBuilder({
       maxItems: null,
       create: false,
       plugins: ['remove_button'],
-      options: [{"id": "None"}, {"id": "Christian"}, {"id": "Sunni"}, {"id": "Ahmedi"}, {"id": "Shiite"}, {"id": "Jew"} ]
+      options: [{"id": "None"}, {"id": "Christian"}, {"id": "Sunni"}, {"id": "Ahmedi"}, {"id": "Shiite"}, {"id": "Jews"} ]
     }
   },
   {
