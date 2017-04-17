@@ -115,3 +115,8 @@ $("#builder-basic").css("width", 1020);
 $("#builder-basic").css("margin-left", 130);
 $("#builder-basic").css("max-height", 200);
 $("#builder-basic").css("overflow-x", "scroll");
+
+//set be bg looking good...
+//$(".rules-group-container").css("background", '#fff');
+$("body").css("background", 'rgb(250, 240, 210)')
+$(".rules-group-container").css("border", 'none');
