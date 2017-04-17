@@ -3,6 +3,8 @@ var markers=[{"":"0","S#":"1","Blast Day Type":"Weekend",City:"Islamabad",Latitu
 var map;
 var markerObjects = [];
 
+var polygon_id_counter = 1; //to identifiate easily the polygons added by user...
+
 function utcformat(d) {
   d = new Date(d);
   var tail = ' GMT', D = [d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate()];
@@ -64,8 +66,17 @@ function initialize() {
     var myOptions = {
       center: new google.maps.LatLng(markers[0].Latitude, markers[0].Longitude),
       zoom: 5,
-      mapTypeId: google.maps.MapTypeId.HYBRID, 
-      disableDefaultUI: true
+      mapTypeId: google.maps.MapTypeId.HYBRID,
+
+      disableDefaultUI: true,
+
+      zoomControl: true,
+      zoomControlOptions: {
+        position: google.maps.ControlPosition.RIGHT_CENTER
+      },
+      
+      fullscreenControl: true,
+      streetViewControl: false
     };
 
     map = new google.maps.Map(document.getElementById("map"), myOptions);
@@ -163,7 +174,7 @@ function initialize() {
     drawingMode: google.maps.drawing.OverlayType.MARKER,
     drawingControl: true,
     drawingControlOptions: {
-      position: google.maps.ControlPosition.RIGHT,
+      position: google.maps.ControlPosition.LEFT_TOP,
       drawingModes: ['polygon', 'marker']
     },
     markerOptions: {
@@ -180,7 +191,17 @@ function initialize() {
   //TODO : define actions associated to the drawing manager, polygons and markers...
   google.maps.event.addListener(drawingManager, 'overlaycomplete', function(event) {
       //alert(event.overlay);
-      google.maps.event.addListener(event.overlay, 'dblclick', function() {
+      event.overlay.content = 'AREA_' + (polygon_id_counter ++);
+      event.overlay.infoWindow = new google.maps.InfoWindow;
+      event.overlay.infoWindow.setContent(event.overlay.content);
+
+      google.maps.event.addListener(event.overlay, 'click', function(e) {
+            event.overlay.infoWindow.setPosition(e.latLng);
+            event.overlay.infoWindow.open(map);
+      });
+
+      google.maps.event.addListener(event.overlay, 'rightclick', function() {
+            event.overlay.infoWindow.open(null);
             event.overlay.setMap(null);
       });
   });
