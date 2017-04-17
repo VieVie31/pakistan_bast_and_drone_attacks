@@ -81,6 +81,22 @@ $('#builder-basic').queryBuilder({
     plugins: ['remove_button'],
     options: [{"id": "Civilian"}, {"id": "Government"}, {"id": "Law"}, {"id": "Religious"}, {"id": "Army"}, {"id": "Foreign"}, {"id": "Unknow"} ]
   }
+},
+{
+  id: "IS_AREA",
+  label: "IS_AREA",
+  type: "double",
+  operators: ["equal", "not_equal"],
+  validation: {
+    callback: function (value,  rule) {
+      if (polygons_area_table['AREA_' + value] != null)
+        return true;
+      else {
+        alert('' + value + ' is not a valid area number !!');
+        return false;
+      }
+    }
+  }
 }
 ],
 

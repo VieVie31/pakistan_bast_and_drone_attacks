@@ -4,6 +4,7 @@ var map;
 var markerObjects = [];
 
 var polygon_id_counter = 1; //to identifiate easily the polygons added by user...
+var polygons_area_table = [];
 
 function utcformat(d) {
   d = new Date(d);
@@ -74,7 +75,12 @@ function initialize() {
       zoomControlOptions: {
         position: google.maps.ControlPosition.RIGHT_CENTER
       },
-      
+
+      mapTypeControl: true,
+      mapTypeControlOptions: {
+        position: google.maps.ControlPosition.LEFT_BOTTOM
+      },
+
       fullscreenControl: true,
       streetViewControl: false
     };
@@ -171,7 +177,6 @@ function initialize() {
   //add a drawer manager to let the user filter by drawed region ??
   //https://developers.google.com/maps/documentation/javascript/examples/drawing-tools
   var drawingManager = new google.maps.drawing.DrawingManager({
-    drawingMode: google.maps.drawing.OverlayType.MARKER,
     drawingControl: true,
     drawingControlOptions: {
       position: google.maps.ControlPosition.LEFT_TOP,
@@ -190,8 +195,11 @@ function initialize() {
   
   //TODO : define actions associated to the drawing manager, polygons and markers...
   google.maps.event.addListener(drawingManager, 'overlaycomplete', function(event) {
-      //alert(event.overlay);
-      event.overlay.content = 'AREA_' + (polygon_id_counter ++);
+      var polygon_id = 'AREA_' + (polygon_id_counter ++); //set an id to the polygon
+
+      polygons_area_table[polygon_id] = event.overlay; //save the polygon in tha table...
+
+      event.overlay.content = polygon_id;
       event.overlay.infoWindow = new google.maps.InfoWindow;
       event.overlay.infoWindow.setContent(event.overlay.content);
 
@@ -201,6 +209,7 @@ function initialize() {
       });
 
       google.maps.event.addListener(event.overlay, 'rightclick', function() {
+            polygons_area_table[event.overlay.content] = null;
             event.overlay.infoWindow.open(null);
             event.overlay.setMap(null);
       });

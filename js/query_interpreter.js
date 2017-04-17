@@ -44,6 +44,9 @@ function filter_conditon_and(rules, data) { //rules is a list of rules
         case "TARGET_TYPE":
             result_current_rule = filter_target_type(current_rule, data);
             break;
+        case "IS_AREA":
+            result_current_rule = filter_area(current_rule, data);
+            break;
         default: //undefined --> new group of rules
             if (current_rule.condition == "AND")
                 result_current_rule = filter_conditon_and(current_rule.rules, data);
@@ -82,6 +85,9 @@ function filter_conditon_or(rules, data) { //rules is a list of rules
             break;
         case "TARGET_TYPE":
             result_current_rule = filter_target_type(current_rule, data);
+            break;
+        case "IS_AREA":
+            result_current_rule = filter_area(current_rule, data);
             break;
         default: //undefined --> new group of rules
             if (current_rule.condition == "AND")
@@ -162,3 +168,18 @@ function filter_kamikaze(r, data) {
     else //greater
         return (parseInt(r.value) < parseInt(data.nb_kamikaze));
 }
+
+function filter_area(r, data) {
+    var polygon = polygons_area_table['AREA_' + r.value];
+    var myLatlng = new google.maps.LatLng(
+        parseFloat(data.Latitude),
+        parseFloat(data.Longitude)
+    );
+
+    if (r.operator == "equal") {
+        return google.maps.geometry.poly.containsLocation(myLatlng, polygon);
+    } else { //not equal
+        return !google.maps.geometry.poly.containsLocation(myLatlng, polygon);
+    }
+}
+
