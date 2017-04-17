@@ -159,6 +159,33 @@ function initialize() {
 
   //add a drawer manager to let the user filter by drawed region ??
   //https://developers.google.com/maps/documentation/javascript/examples/drawing-tools
+  var drawingManager = new google.maps.drawing.DrawingManager({
+    drawingMode: google.maps.drawing.OverlayType.MARKER,
+    drawingControl: true,
+    drawingControlOptions: {
+      position: google.maps.ControlPosition.RIGHT,
+      drawingModes: ['polygon', 'marker']
+    },
+    markerOptions: {
+      icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+    },
+    polygonOptions: {
+      clickable: true,
+      editable: true,
+      dragable: true,
+      zIndex: 1
+    }
+  });
+  
+  //TODO : define actions associated to the drawing manager, polygons and markers...
+  google.maps.event.addListener(drawingManager, 'overlaycomplete', function(event) {
+      //alert(event.overlay);
+      google.maps.event.addListener(event.overlay, 'dblclick', function() {
+            event.overlay.setMap(null);
+      });
+  });
+  
+  drawingManager.setMap(map);
 
   //FIXME : filters doesn't work on maker cluster... :'(
   //var markerCluster = new MarkerClusterer(map, markerObjects, {maxZoom: 5, imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
