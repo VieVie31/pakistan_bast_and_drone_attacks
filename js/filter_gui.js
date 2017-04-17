@@ -98,22 +98,15 @@ $('#btn-get').on('click', function() {
   
   if (!$.isEmptyObject(result)) {
     filterMarkers(result);
-    //query_json = result;
-    //alert(JSON.stringify(result, null, 2));
   } else {
     //reset all the markers...
     filterMarkers({"condition": "AND","rules": []});
   }
 });
 
-var query_json = null;
-
-
 
 //display the box correctly
-$("#builder-basic").css("width", 1020);
-$("#builder-basic").css("margin-left", 130);
-$("#builder-basic").css("max-height", 200);
+$("#builder-basic").css("width", '80vw');
 $("#builder-basic").css("overflow-x", "scroll");
 
 //set be bg looking good...

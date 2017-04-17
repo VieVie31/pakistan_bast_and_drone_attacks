@@ -157,8 +157,11 @@ function initialize() {
     }
   }, 0);
 
+  //add a drawer manager to let the user filter by drawed region ??
+  //https://developers.google.com/maps/documentation/javascript/examples/drawing-tools
+
   //FIXME : filters doesn't work on maker cluster... :'(
-  var markerCluster = new MarkerClusterer(map, markerObjects, {maxZoom: 5, imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+  //var markerCluster = new MarkerClusterer(map, markerObjects, {maxZoom: 5, imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 }
 
 
