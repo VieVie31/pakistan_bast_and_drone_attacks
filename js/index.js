@@ -141,7 +141,8 @@ function initialize() {
         title: data.Location,
         //animation: google.maps.Animation.DROP,
         opacity: 0.5,
-        icon: pinImage
+        icon: pinImage,
+        scaledSize: new google.maps.Size(12, 12)
       });
 
       //the pop up containing the infos
@@ -152,6 +153,15 @@ function initialize() {
 
       // store in a global array
       var markerIndex = markerObjects.push(marker) - 1;
+
+      //change the marker opacity when hovering it...
+      google.maps.event.addListener(markerObjects[markerIndex], 'mouseover', function() {
+      	this.setOpacity(1);
+      });
+
+      google.maps.event.addListener(markerObjects[markerIndex], 'mouseout', function() {
+      	this.setOpacity(0.5);
+      });
 
       // click listener on a marker itself
       google.maps.event.addListener(markerObjects[markerIndex], 'click', function() {
