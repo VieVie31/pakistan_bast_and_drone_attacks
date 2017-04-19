@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DashBoard</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/gridstack.css"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.0/jquery-ui.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js"></script>
+    <script src="./js/gridstack.js"></script>
+    <script src="./js/gridstack.jQueryUI.js"></script>
+
+    <style type="text/css">
+    body, .grid-stack {
+        background: #f0f0f0;
+    }
+
+    .grid-stack-item-content {
+        text-align: center;
+        background-color: #fff;
+    }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+
+    <br/>
+
+    <div class="grid-stack">
+        <div class="grid-stack-item" data-gs-x="5" data-gs-y="0" data-gs-width="9" data-gs-height="3">
+            <div class="grid-stack-item-content">
+                FILTRES
+            </div>
+        </div>
+        <div class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="3" data-gs-height="9">
+            <div class="grid-stack-item-content">
+                LIST
+            </div>
+        </div>
+        <div class="grid-stack-item" data-gs-x="3" data-gs-y="3" data-gs-width="7" data-gs-height="6">
+            <div class="grid-stack-item-content">
+                MAP
+            </div>
+        </div>
+        <div class="grid-stack-item" data-gs-x="10" data-gs-y="3" data-gs-width="2" data-gs-height="4">
+            <div class="grid-stack-item-content">
+                NOTES
+            </div>
+        </div>
+        <div class="grid-stack-item" data-gs-x="10" data-gs-y="7" data-gs-width="2" data-gs-height="2">
+            <div class="grid-stack-item-content">
+                CTRL
+            </div>
+        </div>
+    </div>
+
+    <hr/>
+
+
+</div>
+
+
+<script type="text/javascript">
+$(function () {
+    var options = {
+        float: true
+    };
+
+    $('.grid-stack').gridstack(options);
+
+});
+</script>
+</body>
+</html>
