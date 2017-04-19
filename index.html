@@ -117,10 +117,18 @@
     //setting gridstack
     $(function () {
         var options = {
-            float: true
+            float: false, //set the gravity to the up
+            handle: '.grid-stack-item-content',
+            rtl: 'true'
         };
         $('.grid-stack').gridstack(options);
 
+        //set the map not draggrable not resizable and locked, so the user can use it easilly...
+        var grid = $('.grid-stack').data('gridstack');
+	    $("#map").parent().parent().attr("id", "map_container");
+	    grid.movable('#map_container', false);
+	    grid.resizable('#map_container', false);
+	    grid.locked('#map_container', true);
     });
 
     //refrehs the gps positions... and reset animation...
