@@ -86,6 +86,7 @@ function initialize() {
     };
 
     map = new google.maps.Map(document.getElementById("map"), myOptions);
+    map.setTilt(45);
 
     // drop markers one by one
     var i = 0;
@@ -159,7 +160,6 @@ function initialize() {
         }
       })
       .on('click', function() {
-        console.log("click");
         var marker = markerObjects[markerIndex];
         marker.setAnimation(google.maps.Animation.BOUNCE);
         infowindow.open(map, marker);
