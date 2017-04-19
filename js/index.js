@@ -34,16 +34,6 @@ function make_info(data) {
   '</tr>'+
 
   '<tr>'+
-  '<td>' + "LAT" + '</td>'+
-  '<td>' + data.Latitude + '</td>'+
-  '</tr>'+
-
-  '<tr>'+
-  '<td>' + "LONG" + '</td>'+
-  '<td>' + data.Longitude + '</td>'+
-  '</tr>'+
-
-  '<tr>'+
   '<td>' + "#KiLLED" + '</td>'+
   '<td>' + data.nb_killed + '</td>'+
   '</tr>'+

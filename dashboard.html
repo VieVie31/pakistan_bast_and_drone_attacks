@@ -42,42 +42,45 @@
     <div class="container-fluid">
         <br/>
         <div class="grid-stack">
-
-            <!-- filters -->
-            <div class="grid-stack-item" data-gs-x="5" data-gs-y="0" data-gs-width="9" data-gs-height="3">
-                <div class="grid-stack-item-content">
-                    <div id="builder-basic"></div>
-                </div>
-            </div>
-
-            <!-- the list of incidents -->
-            <div class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="3" data-gs-height="9">
-                <div class="grid-stack-item-content">
-                    <div id="overlay" class="list-group"></div>
-                </div>
-            </div>
-
             <!-- the map -->
-            <div class="grid-stack-item" data-gs-x="3" data-gs-y="3" data-gs-width="7" data-gs-height="6">
+            <div class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="7" data-gs-height="6">
                 <div class="grid-stack-item-content">
                     <div id="map" style="width:100%;height:100%"></div>
                 </div>
             </div>
 
-            <div class="grid-stack-item" data-gs-x="10" data-gs-y="3" data-gs-width="2" data-gs-height="4">
+            <!-- filters -->
+            <div class="grid-stack-item" data-gs-x="0" data-gs-y="6" data-gs-width="9" data-gs-height="3">
                 <div class="grid-stack-item-content">
-                    NOTES
+                    <div id="builder-basic"></div>
+                </div>
+            </div>
+
+            <!-- some stuffs here -->
+            <div class="grid-stack-item" data-gs-x="7" data-gs-y="0" data-gs-width="2" data-gs-height="4">
+                <div class="grid-stack-item-content">
+                    <h3>NOTES</h3>
+                    <textarea rows="10"></textarea>
                 </div>
             </div>
 
             <!-- control pannel -->
-            <div class="grid-stack-item" data-gs-x="10" data-gs-y="7" data-gs-width="2" data-gs-height="2">
+            <div class="grid-stack-item" data-gs-x="7" data-gs-y="4" data-gs-width="2" data-gs-height="2">
                 <div class="grid-stack-item-content">
-                    <input type ="button" id="btn-get" value="&#9654; " title="Apply filter(s)..."></input>
-                    <button id="stats_button" title="See some stats...">&Sigma;</button>
-                    <button id="reset_markers_location_button" title="Refresh markers positions...">&#8634;</button>
+                    <h4>Control</h4>
+                    <input type ="button" id="btn-get" value="&#9654;" title="Apply filter(s)..." style="width:100%;"></input></br>
+                    <button id="stats_button" title="See some stats..." style="width:100%;">&Sigma;</button></br>
+                    <button id="reset_markers_location_button" title="Refresh markers positions..." style="width:100%;">&#8634;</button></br>
                 </div>
             </div>
+
+            <!-- the list of incidents -->
+            <div class="grid-stack-item" data-gs-x="9" data-gs-y="0" data-gs-width="3" data-gs-height="9">
+                <div class="grid-stack-item-content">
+                    <div id="overlay" class="list-group"></div>
+                </div>
+            </div>
+            
         </div>
         <br/>
     </div>
@@ -144,6 +147,7 @@
     //set the filter box looking good...
     $("#builder-basic").css("width", '100%');
     $(".rules-group-container").css("background", "white");
+    $("body").css("overflow", "scroll");
     </script>
 </body>
 </html>
