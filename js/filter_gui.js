@@ -31,7 +31,7 @@ $('#builder-basic').queryBuilder({
       maxItems: null,
       create: false,
       plugins: ['remove_button'],
-      options: [{"id": "None"}, {"id": "Christian"}, {"id": "Sunni"}, {"id": "Ahmedi"}, {"id": "Shiite"}, {"id": "Jews"} ]
+      options: [{"id": "None"}, {"id": "Christian"}, {"id": "Sunni"}, {"id": "Ahmedi"}, {"id": "Shiite"}, {"id": "Jews"}, {"id": "Extremist"} ]
     }
   },
   {
@@ -79,7 +79,7 @@ $('#builder-basic').queryBuilder({
     maxItems: null,
     create: false,
     plugins: ['remove_button'],
-    options: [{"id": "Civilian"}, {"id": "Government"}, {"id": "Law"}, {"id": "Religious"}, {"id": "Army"}, {"id": "Foreign"}, {"id": "Unknow"} ]
+    options: [{"id": "Civilian"}, {"id": "Government"}, {"id": "Law"}, {"id": "Religious"}, {"id": "Army"}, {"id": "Foreign"}, {"id": "Unknow"}, {"id": "Terrorist"}]
   }
 },
 {

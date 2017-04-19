@@ -9,10 +9,10 @@ filterMarkers = function (original_rules) {
         fun_condition = (rules.condition == "AND") ? filter_conditon_and : filter_conditon_or;
 
         if (fun_condition(rules.rules, data)) {
-            $('#id_lst_' + data["S#"]).css('display', 'block'); //display in the left list
+            $('#id_lst_' + data["S#"] + '_' + data.type_attack).css('display', 'block'); //display in the left list
             marker.setVisible(true); //display the amrker
         } else {
-            $('#id_lst_' + data["S#"]).css('display', 'none'); //hide from the list
+            $('#id_lst_' + data["S#"] + '_' + data.type_attack).css('display', 'none'); //hide from the list
             marker.setVisible(false); //hide the marker
         }
     }
