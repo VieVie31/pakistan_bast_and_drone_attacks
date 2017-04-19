@@ -5,35 +5,19 @@ body {
 }
 
 body, .grid-stack {
-  background: #f0f0f0;
+  background: rgb(250, 240, 210);
 }
 
 .grid-stack-item-content {
   text-align: center;
   background-color: #fff;
+  -moz-box-shadow: 5px 5px 10px 0px #656565;
+  -webkit-box-shadow: 5px 5px 10px 0px #656565;
+  -o-box-shadow: 5px 5px 10px 0px #656565;
+  box-shadow: 5px 5px 10px 0px #656565;
+  filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=10);
 }
 
-#map {
-  position: absolute;
-  top: 20vh;
-  display: block;
-  width: 80vw;
-  height: 80vh;
-  margin-left: 20vw;
-  background: #58B;
-}
-
-#overlay {
-  background: white;
-  position: absolute;
-  width: 20vw;
-  height: 100vh;
-  top: 0; 
-  left: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  border-right: 1px solid rgba(0,0,0,0.25);
-}
 
 @keyframes hover_list {
     from {background-color: white;}
@@ -68,13 +52,6 @@ table, th, td {
 }
 
 #builder-basic {
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: block;
-  width: 70vw;
-  height: 20vh;
-  margin-left: 30vw;
   overflow-y: scroll;
   z-index: 900;
   margin-right: 1px;
@@ -82,12 +59,6 @@ table, th, td {
 
 #btn-get {
   z-index: 998;
-  position: absolute;
-  bottom: 3vh;
-  right: 12vw;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
   color: white;
   background: red;
   font-weight: bold;
@@ -95,12 +66,6 @@ table, th, td {
 
 #reset_markers_location_button {
   z-index: 998;
-  position: absolute;
-  bottom: 3vh;
-  right: 7vw;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
   color: white;
   background: green;
   font-weight: bold;
@@ -108,12 +73,6 @@ table, th, td {
 
 #stats_button {
   z-index: 999;
-  position: absolute;
-  bottom: 3vh;
-  right: 2vw;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
   color: white;
   background: orange;
 }

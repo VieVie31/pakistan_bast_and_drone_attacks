@@ -1,81 +1,149 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>DashBoard</title>
-
+    <title>Pakistant Blast and Drone attacks exploration</title>
+    <!-- style -->
+    <link rel="stylesheet" href="css/dashboard.css">
+    <!-- jQuery -->
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+    <script src='https://code.jquery.com/ui/1.12.0/jquery-ui.min.js'></script>
+    <!-- bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" media="screen" />
+    <!-- google maps -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChtIzkJ44e3WLkQpgBOPjfp6WU-C8dNk8&libraries=drawing"></script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+    <!-- google chart -->
+    <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
+    <!-- query selector -->
+    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+    <link rel='stylesheet prefetch' href='http://codepen.io/harveyl888/pen/OXpZLE.css'>
+    <link rel='stylesheet prefetch' href='http://codepen.io/harveyl888/pen/rLyKVz.css'>
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker3.min.css'>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/dot/1.0.3/doT.min.js'></script>
+    <script src='http://codepen.io/harveyl888/pen/YWZamx.js'></script>
+    <script src='http://codepen.io/harveyl888/pen/OXpZLE.js'></script>
+    <script src='http://codepen.io/harveyl888/pen/rLyKVz.js'></script>
+    <!-- gridstack imports -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/gridstack.css"/>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.0/jquery-ui.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js"></script>
     <script src="./js/gridstack.js"></script>
     <script src="./js/gridstack.jQueryUI.js"></script>
-
-    <style type="text/css">
-    body, .grid-stack {
-        background: #f0f0f0;
-    }
-
-    .grid-stack-item-content {
-        text-align: center;
-        background-color: #fff;
-    }
-    </style>
 </head>
 <body>
     <div class="container-fluid">
+        <br/>
+        <div class="grid-stack">
 
-    <br/>
+            <!-- filters -->
+            <div class="grid-stack-item" data-gs-x="5" data-gs-y="0" data-gs-width="9" data-gs-height="3">
+                <div class="grid-stack-item-content">
+                    <div id="builder-basic"></div>
+                </div>
+            </div>
 
-    <div class="grid-stack">
-        <div class="grid-stack-item" data-gs-x="5" data-gs-y="0" data-gs-width="9" data-gs-height="3">
-            <div class="grid-stack-item-content">
-                FILTRES
+            <!-- the list of incidents -->
+            <div class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="3" data-gs-height="9">
+                <div class="grid-stack-item-content">
+                    <div id="overlay" class="list-group"></div>
+                </div>
+            </div>
+
+            <!-- the map -->
+            <div class="grid-stack-item" data-gs-x="3" data-gs-y="3" data-gs-width="7" data-gs-height="6">
+                <div class="grid-stack-item-content">
+                    <div id="map" style="width:100%;height:100%"></div>
+                </div>
+            </div>
+
+            <div class="grid-stack-item" data-gs-x="10" data-gs-y="3" data-gs-width="2" data-gs-height="4">
+                <div class="grid-stack-item-content">
+                    NOTES
+                </div>
+            </div>
+
+            <!-- control pannel -->
+            <div class="grid-stack-item" data-gs-x="10" data-gs-y="7" data-gs-width="2" data-gs-height="2">
+                <div class="grid-stack-item-content">
+                    <input type ="button" id="btn-get" value="&#9654; " title="Apply filter(s)..."></input>
+                    <button id="stats_button" title="See some stats...">&Sigma;</button>
+                    <button id="reset_markers_location_button" title="Refresh markers positions...">&#8634;</button>
+                </div>
             </div>
         </div>
-        <div class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="3" data-gs-height="9">
-            <div class="grid-stack-item-content">
-                LIST
-            </div>
+        <br/>
+    </div>
+
+    <div id="stats">
+        <button id="close_stats">&#735;</button>
+        <h1 style='text-align:center;'>some stats here...</h1>
+
+        <!-- display the stats in 4 boxes -->
+        <div id="div1">
+            bar chart</br>
+            nb d'attaques en fonction du jour de la semaine
         </div>
-        <div class="grid-stack-item" data-gs-x="3" data-gs-y="3" data-gs-width="7" data-gs-height="6">
-            <div class="grid-stack-item-content">
-                MAP
-            </div>
+        <div id="div2">
+            cammeber</br>
+            proportion de morts en fonction du type de cible et/ou religion
         </div>
-        <div class="grid-stack-item" data-gs-x="10" data-gs-y="3" data-gs-width="2" data-gs-height="4">
-            <div class="grid-stack-item-content">
-                NOTES
-            </div>
+        <div id="div3">
+            timeline</br>
+            nb attaques par date par nb morts
         </div>
-        <div class="grid-stack-item" data-gs-x="10" data-gs-y="7" data-gs-width="2" data-gs-height="2">
-            <div class="grid-stack-item-content">
-                CTRL
-            </div>
+        <div id="div4">
+            timeline like</br>
+            laisser l'utilisateur trouver des correlations entre 2 variables (DTW) avec comme axe commun le temps
         </div>
     </div>
 
-    <hr/>
 
+    <!-- scripts -->
+    <script src="js/index.js"></script>
+    <script src="js/query_interpreter.js"></script>
+    <script src="js/filter_gui.js"></script>
+    <script>
+    //setting gridstack
+    $(function () {
+        var options = {
+            float: true
+        };
+        $('.grid-stack').gridstack(options);
 
-</div>
+    });
 
+    //refrehs the gps positions... and reset animation...
+    $("#reset_markers_location_button").on('click', function () {
+        for (i = 0; i < markerObjects.length; i++) {
+            marker = markerObjects[i];
+            marker.setPosition(new google.maps.LatLng(
+                parseFloat(marker.data.Latitude)  + (Math.random() / 1000), //add very small random value to net get all points at the same place...
+                parseFloat(marker.data.Longitude) + (Math.random() / 1000)
+            ));
+            marker.setAnimation(null);
+        }
+    });
 
-<script type="text/javascript">
-$(function () {
-    var options = {
-        float: true
-    };
+    //control the stats modal window...
+    $("#close_stats").on('click', function () {
+        $("#stats").css("display", "none");
+    });
 
-    $('.grid-stack').gridstack(options);
+    $("#stats_button").on('click', function() {
+        $("#stats").css("display", "block");
+    });
 
-});
-</script>
+    //set the filter box looking good...
+    $("#builder-basic").css("width", '100%');
+    $(".rules-group-container").css("background", "white");
+    </script>
 </body>
 </html>
