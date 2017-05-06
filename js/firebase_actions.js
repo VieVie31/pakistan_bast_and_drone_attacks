@@ -46,7 +46,7 @@ function change_values(index) {
 	if ('' + v != "NaN") markers[index].nb_terro = v;
 	else {
 		alert("Only 'Integer' or 'Float' accepted !!");
-		$("#nnb_terro_" + index).val(markers[index].nb_terro);
+		$("#nb_terro_" + index).val(markers[index].nb_terro);
 		return;
 	}
 }
