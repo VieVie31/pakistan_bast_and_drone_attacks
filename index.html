@@ -152,11 +152,7 @@
     <script src="js/query_interpreter.js"></script>
     <script src="js/filter_gui.js"></script>
     <script>
-
-    function save_and_log_out() {
-        save_my_markers(markers);
-        user_log_out();
-    }
+    original_markers = markers;
 
     //setting toastr
     toastr.options = {

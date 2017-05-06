@@ -1,5 +1,11 @@
+function save_and_log_out() {
+	save_my_markers(markers);
+	user_log_out();
+}
+
 
 function change_values(index) {
+	//TODO: make it works !!!! without refreshing the map !!!
 	/*
 	var database = firebase.database();
 	var ref = database.ref('markers/' + current_user.uid + "/markers/" + index);
@@ -80,11 +86,14 @@ function user_create_account() {
 
 	firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
 	    current_user = firebase.auth().currentUser;
-	    toastr.info("You are now logged !!");
-	    action_when_sign_in();
+	    toastr.info("Your account is now live... Have fun !!");
+
+	    $("#connexion_box").css("display", "none");
+		$("#deconnexion_box").css("display", "block");
 
 	    //save the originals markers....
 	    save_my_markers(markers);
+
 	}, function(error) {
 		var errorCode = error.code;
 		var errorMessage = error.message;
