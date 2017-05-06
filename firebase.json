@@ -3,7 +3,8 @@
         "public": ".",
         "ignore": [
             "firebase.json",
-            "**/.*"
+            "**/.*",
+            ".git/*"
          ]
     }
 }
