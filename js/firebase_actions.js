@@ -1,8 +1,75 @@
+
+function change_values(index) {
+	/*
+	var database = firebase.database();
+	var ref = database.ref('markers/' + current_user.uid + "/markers/" + index);
+
+	var tmp_m = JSON.parse(JSON.stringify(markers[index]));
+	var id = tmp_m["S#"];
+	var empty_id = tmp_m[""];
+	delete tmp_m[""];
+	delete tmp_m["S#"];
+	tmp_m["S"] = id;
+	tmp_m["id"] = "" + id + "_" + tmp_m.type_attack;
+
+	//update the new values...
+	tmp_m.nb_killed = $("#nb_killed_" + index).val();
+
+	//upload the new version...
+	ref.set(tmp_m);
+	*/
+
+	markers[index].nb_killed = $("#nb_killed_" + index).val();
+}
+
+function save_my_markers(markers) {
+	var database = firebase.database();
+	var t = database.ref('markers/' + current_user.uid);
+
+	var lst = [];
+
+	for (var i = 0; i < markers.length; i++) {
+		//deepcopy of the marker
+		var m = JSON.parse(JSON.stringify(markers[i]));
+		var id = m["S#"];
+		var empty_id = m[""];
+		
+		//thoses keys are not in varidl format so detele them...
+		delete m[""];
+		delete m["S#"];
+		m["S"] = id;
+		m["id"] = "" + id + "_" + m.type_attack;
+
+		lst[i] = m;
+	}
+
+	//save my markers online
+	t.set({markers: lst});
+}
+
+
+
 function action_when_sign_in() {
 	$("#connexion_box").css("display", "none");
 	$("#deconnexion_box").css("display", "block");
 
-	//TODO: load the custom users attacks...
+	var database = firebase.database();
+	var ref = database.ref('markers/' + current_user.uid);
+	ref.on("value", function (m) {
+		//retrieve my markers...
+		markers = m.val().markers;
+
+		//reset in the original format not supported by the firebase database storage...
+		for (var i = 0; i < markers.length; i++) {
+			markers[i]["S#"] = markers[i]["S"];
+			markers[i][""] = markers[i]["id"];
+		}
+
+		//reload ALL the map...
+		markerObjects = [];
+		$("#overlay").html(""); //reset the list of attentas...
+		initialize(); //the map function...
+	});
 }
 
 var current_user = null;
@@ -15,6 +82,9 @@ function user_create_account() {
 	    current_user = firebase.auth().currentUser;
 	    toastr.info("You are now logged !!");
 	    action_when_sign_in();
+
+	    //save the originals markers....
+	    save_my_markers(markers);
 	}, function(error) {
 		var errorCode = error.code;
 		var errorMessage = error.message;

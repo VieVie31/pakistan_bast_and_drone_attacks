@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="css/dashboard.css">
     <!-- firebase : those scripts MUST be imported before all the other... -->
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-database.js"></script>
+
     <script>
       // Initialize Firebase
       var config = {
@@ -90,7 +94,8 @@
                     </div>
 
                     <div id="deconnexion_box" style="display:none;">
-                        <button onclick="user_log_out();">Log Out</button>
+                        <button onclick="save_and_log_out();">Save & Log Out</button></br>
+                        <button onclick="user_log_out();">Just Log Out</button>
                     </div>
                 </div>
             </div>
@@ -147,6 +152,12 @@
     <script src="js/query_interpreter.js"></script>
     <script src="js/filter_gui.js"></script>
     <script>
+
+    function save_and_log_out() {
+        save_my_markers(markers);
+        user_log_out();
+    }
+
     //setting toastr
     toastr.options = {
         "closeButton": false,

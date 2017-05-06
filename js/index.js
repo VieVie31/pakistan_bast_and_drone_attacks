@@ -17,7 +17,7 @@ function utcformat(d) {
   return D.join('/') + tail;
 }
 
-function make_info(data) {
+function make_info(data, index_of_data) {
   return '<div id="content">'+
   '<div id="bodyContent">'+
   '<table>'+
@@ -34,7 +34,7 @@ function make_info(data) {
 
   '<tr>'+
   '<td>' + "#KiLLED" + '</td>'+
-  '<td>' + data.nb_killed + '</td>'+
+  '<td><input id="nb_killed_' + index_of_data + '" type="text" value="' + data.nb_killed + '" onchange="change_values(' + index_of_data + ');"></input></td>'+
   '</tr>'+
 
   '<tr>'+
@@ -58,6 +58,16 @@ function make_info(data) {
   '</tr>'+
 
   '</table>'+
+
+
+  '<button onclick="console.log(' + index_of_data + ');">index</button>' + 
+/*
+  (
+  	current_user != null 
+  	? '<button onchange="change_values(' + index_of_data + ');">Enregister les nouvelles valeurs</button>'
+  	: ''
+  ) +
+*/
   '</div>'+
   '</div>';
 }
@@ -96,7 +106,7 @@ function initialize() {
         parseFloat(data.Longitude) + (Math.random() / 1000)
       );
 
-      var infos = make_info(data);
+      var infos = make_info(data, i);
 
       //set different images : bomb = terrorist attacks, plane = drone attacks
 	  var administration = null;
