@@ -26,8 +26,6 @@
       };
       firebase.initializeApp(config);
     </script>
-    <!-- load the delault markers -->
-    <script src="https://firebasestorage.googleapis.com/v0/b/pakpak-8ba46.appspot.com/o/default_markers.js?alt=media&token=0663db2a-e518-4fa5-a673-986ff393e0da"></script>
     <!-- jQuery -->
     <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
     <script src='https://code.jquery.com/ui/1.12.0/jquery-ui.min.js'></script>
@@ -63,6 +61,24 @@
     <script src="./js/gridstack.jQueryUI.js"></script>
 </head>
 <body>
+    <!-- load the delault markers -->
+    <script>
+        var markers;
+
+        function add_script(src) {
+            var s = document.createElement('script');
+            s.setAttribute('src', src);
+            document.body.appendChild(s);
+        }
+        
+        //load the markers if not allready present in localStorage...
+        var markers = localStorage.getItem("pakpak_original_dataset");
+        if (!markers || markers == "null")
+            add_script("https://firebasestorage.googleapis.com/v0/b/pakpak-8ba46.appspot.com/o/default_markers.js?alt=media&token=4c77c3a5-38ee-4266-ae47-db5d32c4c471"); //download and save the dataset...
+        else 
+            markers = JSON.parse(markers);
+    </script>
+    
     <div class="container-fluid">
         <br/>
         <div class="grid-stack">
