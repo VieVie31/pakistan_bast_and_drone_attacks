@@ -31,6 +31,7 @@ function change_values(index) {
 	else {
 		alert("The only 'Integer' accepted !!");
 		$("#nb_killed_" + index).val(markers[index].nb_killed); //reset the old value
+		return;
 	}
 	//injured 
 	var v = parseInt($("#nb_injured_" + index).val());
@@ -38,6 +39,7 @@ function change_values(index) {
 	else {
 		alert("The only 'Integer' accepted !!");
 		$("#nb_injured_" + index).val(markers[index].nb_injured);
+		return;
 	}
 	//terro 
 	var v = parseFloat($("#nb_terro_" + index).val());
@@ -45,6 +47,7 @@ function change_values(index) {
 	else {
 		alert("Only 'Integer' or 'Float' accepted !!");
 		$("#nnb_terro_" + index).val(markers[index].nb_terro);
+		return;
 	}
 }
 
