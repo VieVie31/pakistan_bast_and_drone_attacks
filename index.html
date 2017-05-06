@@ -5,8 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pakistant Blast and Drone attacks exploration</title>
+    <link rel="icon" type="image/png" href="img/bomb_red.png" />
     <!-- style -->
     <link rel="stylesheet" href="css/dashboard.css">
+    <!-- firebase : those scripts MUST be imported before all the other... -->
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyBp7R7KCzC_pHHrWm6P0oxBNuD62sJqU3I",
+        authDomain: "pakpak-8ba46.firebaseapp.com",
+        databaseURL: "https://pakpak-8ba46.firebaseio.com",
+        projectId: "pakpak-8ba46",
+        storageBucket: "pakpak-8ba46.appspot.com",
+        messagingSenderId: "559630732484"
+      };
+      firebase.initializeApp(config);
+    </script>
+    <!-- load the delault markers -->
+    <script src="https://firebasestorage.googleapis.com/v0/b/pakpak-8ba46.appspot.com/o/default_markers.js?alt=media&token=0663db2a-e518-4fa5-a673-986ff393e0da"></script>
     <!-- jQuery -->
     <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
     <script src='https://code.jquery.com/ui/1.12.0/jquery-ui.min.js'></script>
@@ -15,6 +32,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" media="screen" />
+    <!-- toastr : for notifications managing... -->
+    <link href="http://codeseven.github.io/toastr/build/toastr.min.css" rel="stylesheet"/>
+    <script src="http://codeseven.github.io/toastr/build/toastr.min.js"></script>
     <!-- google maps -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChtIzkJ44e3WLkQpgBOPjfp6WU-C8dNk8&libraries=drawing"></script>
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
@@ -56,11 +76,22 @@
                 </div>
             </div>
 
-            <!-- some stuffs here -->
+            <!-- login / create account box -->
             <div class="grid-stack-item" data-gs-x="7" data-gs-y="0" data-gs-width="2" data-gs-height="4">
                 <div class="grid-stack-item-content">
-                    <h3>NOTES</h3>
-                    <textarea rows="10"></textarea>
+                    <h3>Sign-In</h3>
+
+                    <div id="connexion_box" style="display:block;">
+                        <input id="mail_input" type="text" placeholder="email@domain.com">
+                        <input id="pass_input" type="password" placeholder="password">
+
+                        <button onclick="user_create_account();">Create Account</button>
+                        <button onclick="user_sign_in();">Sign In</button>
+                    </div>
+
+                    <div id="deconnexion_box" style="display:none;">
+                        <button onclick="user_log_out();">Log Out</button>
+                    </div>
                 </div>
             </div>
 
@@ -112,9 +143,29 @@
 
     <!-- scripts -->
     <script src="js/index.js"></script>
+    <script src="js/firebase_actions.js"></script>
     <script src="js/query_interpreter.js"></script>
     <script src="js/filter_gui.js"></script>
     <script>
+    //setting toastr
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
     //setting gridstack
     $(function () {
         var options = {
