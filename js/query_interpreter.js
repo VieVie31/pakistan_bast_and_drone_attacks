@@ -1,3 +1,16 @@
+function get_visible_markers() {
+    var lst = [];
+
+    for (i = 0; i < markerObjects.length; i++) {
+        marker = markerObjects[i];
+        if (marker.visible) {
+            lst.push(marker.data);
+        }
+    }
+
+    return lst;
+}
+
 filterMarkers = function (original_rules) {
     for (i = 0; i < markerObjects.length; i++) {
         marker = markerObjects[i];
