@@ -4,7 +4,10 @@
         "ignore": [
             "firebase.json",
             "**/.*",
-            ".git/*"
+            ".git/*",
+            "cleaning_data/",
+            "README.md",
+            "firebase-debug.log"
          ]
     }
 }
