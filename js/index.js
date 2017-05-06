@@ -39,12 +39,12 @@ function make_info(data, index_of_data) {
 
   '<tr>'+
   '<td>' + "#INJURED" + '</td>'+
-  '<td>' + data.nb_injured + '</td>'+
+  '<td><input id="nb_injured_' + index_of_data + '" type="text" value="' + data.nb_injured + '" onchange="change_values(' + index_of_data + ');"></input></td>'+
   '</tr>'+
 
   '<tr>'+
   '<td>' + "#NB_TERRO" + '</td>'+
-  '<td>' + data.nb_terro + '</td>'+
+  '<td><input id="nb_terro_' + index_of_data + '" type="text" value="' + data.nb_terro + '" onchange="change_values(' + index_of_data + ');"></input></td>'+//' + data.nb_terro + '</td>'+
   '</tr>'+
 
   '<tr>'+

@@ -25,7 +25,27 @@ function change_values(index) {
 	ref.set(tmp_m);
 	*/
 
-	markers[index].nb_killed = $("#nb_killed_" + index).val();
+	//killed
+	var v = parseInt($("#nb_killed_" + index).val());
+	if ('' + v != "NaN") markers[index].nb_killed = v;
+	else {
+		alert("The only 'Integer' accepted !!");
+		$("#nb_killed_" + index).val(markers[index].nb_killed); //reset the old value
+	}
+	//injured 
+	var v = parseInt($("#nb_injured_" + index).val());
+	if ('' + v != "NaN") markers[index].nb_injured = v;
+	else {
+		alert("The only 'Integer' accepted !!");
+		$("#nb_injured_" + index).val(markers[index].nb_injured);
+	}
+	//terro 
+	var v = parseFloat($("#nb_terro_" + index).val());
+	if ('' + v != "NaN") markers[index].nb_terro = v;
+	else {
+		alert("Only 'Integer' or 'Float' accepted !!");
+		$("#nnb_terro_" + index).val(markers[index].nb_terro);
+	}
 }
 
 function save_my_markers(markers) {
