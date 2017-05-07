@@ -114,7 +114,16 @@ function action_when_sign_in() {
 	var database = firebase.database();
 	var t = database.ref('version/' + current_user.uid);
 	t.on("value", function(v) { 
-		var online_version = parseInt(v.val().version);
+		var online_version = 0;
+
+		if (!v.val()) {
+			//create a version number...
+			var database = firebase.database();
+			var t = database.ref('version/' + current_user.uid);
+			t.set({version: 0});
+		}
+
+		online_version = parseInt(v.val().version);
 
 		if (!offline_markers || offline_markers == "null" || online_version != parseInt(offline_version)) {
 			toastr.info("Fetching your custom markers in our database...");
@@ -158,13 +167,21 @@ function user_create_account() {
 
 	firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
 	    current_user = firebase.auth().currentUser;
-	    toastr.info("Your account is now live... Have fun !!");
+
+	    //create a version number...
+		var database = firebase.database();
+		var t = database.ref('version/' + current_user.uid);
+		t.set({version: 0});
+
 
 	    $("#connexion_box").css("display", "none");
 		$("#deconnexion_box").css("display", "block");
 
 	    //save the originals markers....
 	    save_my_markers(markers, true);
+
+	    
+	    toastr.info("Your account is now live... Have fun !!");
 
 	}, function(error) {
 		var errorCode = error.code;
