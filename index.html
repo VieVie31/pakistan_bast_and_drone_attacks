@@ -77,8 +77,22 @@
             add_script("https://firebasestorage.googleapis.com/v0/b/pakpak-8ba46.appspot.com/o/default_markers.js?alt=media&token=4c77c3a5-38ee-4266-ae47-db5d32c4c471"); //download and save the dataset...
         else 
             markers = JSON.parse(markers);
+
+        //defining a hashfunction for string...
+        String.prototype.hashCode = function() {
+            var hash = 0, i, chr;
+            
+            if (this.length === 0) return hash;
+                for (i = 0; i < this.length; i++) {
+                    chr   = this.charCodeAt(i);
+                    hash  = ((hash << 5) - hash) + chr;
+                    hash |= 0; // Convert to 32bit integer
+                }
+
+            return hash;
+        };
     </script>
-    
+
     <div class="container-fluid">
         <br/>
         <div class="grid-stack">

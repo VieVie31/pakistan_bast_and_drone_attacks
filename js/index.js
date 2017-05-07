@@ -225,24 +225,28 @@ function initialize() {
   
   //TODO : define actions associated to the drawing manager, polygons and markers...
   google.maps.event.addListener(drawingManager, 'overlaycomplete', function(event) {
-      var polygon_id = 'AREA_' + (polygon_id_counter ++); //set an id to the polygon
-
-      polygons_area_table[polygon_id] = event.overlay; //save the polygon in tha table...
-
-      event.overlay.content = polygon_id;
-      event.overlay.infoWindow = new google.maps.InfoWindow;
-      event.overlay.infoWindow.setContent(event.overlay.content);
-
-      google.maps.event.addListener(event.overlay, 'click', function(e) {
-            event.overlay.infoWindow.setPosition(e.latLng);
-            event.overlay.infoWindow.open(map);
-      });
-
-      google.maps.event.addListener(event.overlay, 'rightclick', function() {
-            polygons_area_table[event.overlay.content] = null;
-            event.overlay.infoWindow.open(null);
-            event.overlay.setMap(null);
-      });
+  		if (event.type == "polygon"){
+  	        var polygon_id = 'AREA_' + (polygon_id_counter ++); //set an id to the polygon
+  	  
+  	        polygons_area_table[polygon_id] = event.overlay; //save the polygon in tha table...
+  	  
+  	        event.overlay.content = polygon_id;
+  	        event.overlay.infoWindow = new google.maps.InfoWindow;
+  	        event.overlay.infoWindow.setContent(event.overlay.content);
+  	  
+  	        google.maps.event.addListener(event.overlay, 'click', function(e) {
+  	              event.overlay.infoWindow.setPosition(e.latLng);
+  	              event.overlay.infoWindow.open(map);
+  	        });
+  	  
+  	        google.maps.event.addListener(event.overlay, 'rightclick', function() {
+  	              polygons_area_table[event.overlay.content] = null;
+  	              event.overlay.infoWindow.open(null);
+  	              event.overlay.setMap(null);
+  	        });
+  	    } else if (event.type == "marker") {
+  	    	alert("TODO : adding markers...");
+  	    }
   });
   
   drawingManager.setMap(map);

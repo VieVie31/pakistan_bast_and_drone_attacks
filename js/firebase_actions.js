@@ -1,5 +1,5 @@
 function save_and_log_out() {
-	save_my_markers(markers);
+	save_my_markers(markers, true);
 	user_log_out();
 }
 
@@ -51,10 +51,7 @@ function change_values(index) {
 	}
 }
 
-function save_my_markers(markers) {
-	var database = firebase.database();
-	var t = database.ref('markers/' + current_user.uid);
-
+function save_my_markers(markers, online) {
 	var lst = [];
 
 	for (var i = 0; i < markers.length; i++) {
@@ -72,8 +69,37 @@ function save_my_markers(markers) {
 		lst[i] = m;
 	}
 
-	//save my markers online
-	t.set({markers: lst});
+	//offline saving the markers
+	var dataset_version = JSON.stringify(lst).hashCode();
+	localStorage.setItem("pakpak_custom_dataset_" + current_user.uid, JSON.stringify(markers));
+	localStorage.setItem("pakpak_custom_dataset_version_" + current_user.uid, dataset_version);
+
+	if (online) {
+		var database = firebase.database();
+		var t = database.ref('version/' + current_user.uid);
+		t.on("value", function(v) {
+			var online_version = parseInt(v.val().version); 
+
+			if (online_version != dataset_version) {
+				//save my markers online
+				var database = firebase.database();
+				var t = database.ref('markers/' + current_user.uid);
+				t.set({markers: lst});
+
+				//saving the version of the dataset...
+				var database = firebase.database();
+				var t = database.ref('version/' + current_user.uid);
+				t.set({version: dataset_version});
+
+				toastr.info("Markers online saved...");
+			} else {
+				toastr.info("This version is allready online...");
+			}
+		});
+	} else {
+		toastr.info("Markers localy saved...");
+	}
+
 }
 
 
@@ -82,22 +108,45 @@ function action_when_sign_in() {
 	$("#connexion_box").css("display", "none");
 	$("#deconnexion_box").css("display", "block");
 
-	var database = firebase.database();
-	var ref = database.ref('markers/' + current_user.uid);
-	ref.on("value", function (m) {
-		//retrieve my markers...
-		markers = m.val().markers;
+	var offline_markers = JSON.parse(localStorage.getItem("pakpak_custom_dataset_" + current_user.uid));
+	var offline_version = JSON.parse(localStorage.getItem("pakpak_custom_dataset_version_" + current_user.uid));
 
-		//reset in the original format not supported by the firebase database storage...
-		for (var i = 0; i < markers.length; i++) {
-			markers[i]["S#"] = markers[i]["S"];
-			markers[i][""] = markers[i]["id"];
+	var database = firebase.database();
+	var t = database.ref('version/' + current_user.uid);
+	t.on("value", function(v) { 
+		var online_version = parseInt(v.val().version);
+
+		if (!offline_markers || offline_markers == "null" || online_version != parseInt(offline_version)) {
+			toastr.info("Fetching your custom markers in our database...");
+
+			var database = firebase.database();
+			var ref = database.ref('markers/' + current_user.uid);
+			ref.on("value", function (m) {
+				//retrieve my markers...
+				markers = m.val().markers;
+
+				//reset in the original format not supported by the firebase database storage...
+				for (var i = 0; i < markers.length; i++) {
+					markers[i]["S#"] = markers[i]["S"];
+					markers[i][""] = markers[i]["id"];
+				}
+
+				//reload ALL the map...
+				markerObjects = [];
+				$("#overlay").html(""); //reset the list of attentas...
+				initialize(); //the map function...
+
+				//save the markers offline...
+				save_my_markers(markers, false);
+			});
+		} else { //TODO: check the version online / offline if the same or not...
+			toastr.info("Using your offline stored markers...");
+
+			//if allready offline value, just use it...
+			markers = offline_markers;
+			initialize(); //the map function...
 		}
 
-		//reload ALL the map...
-		markerObjects = [];
-		$("#overlay").html(""); //reset the list of attentas...
-		initialize(); //the map function...
 	});
 }
 
@@ -115,7 +164,7 @@ function user_create_account() {
 		$("#deconnexion_box").css("display", "block");
 
 	    //save the originals markers....
-	    save_my_markers(markers);
+	    save_my_markers(markers, true);
 
 	}, function(error) {
 		var errorCode = error.code;
@@ -147,6 +196,10 @@ function user_log_out() {
 
 		$("#connexion_box").css("display", "block");
 		$("#deconnexion_box").css("display", "none");
+
+		//reseting the originals markers storred in the localStorage...
+		markers = localStorage.getItem("pakpak_original_dataset");
+		markers = JSON.parse(markers);
 	}, function(error) {
 		var errorCode = error.code;
 		var errorMessage = error.message;
