@@ -1,6 +1,3 @@
-google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart);
-
 function refresh(value) {
         var f1 = document.getElementById("field1");
         var f2 = document.getElementById("field2");

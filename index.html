@@ -143,7 +143,7 @@
             <!-- the list of incidents -->
             <div class="grid-stack-item" data-gs-x="9" data-gs-y="0" data-gs-width="3" data-gs-height="9">
                 <div class="grid-stack-item-content">
-                	<!-- <input placeholder="search" style="width:100%;height:40px;text-align:left;"></input> -->
+                    <!-- <input placeholder="search" style="width:100%;height:40px;text-align:left;"></input> -->
                     <div id="overlay" class="list-group"></div>
                 </div>
             </div>
@@ -160,12 +160,12 @@
         <div id="div1">
             <div id="bubbleCity" style="width: 100%; height: 100%;"></div>
         </div>
+
         <div id="div2">
-<<<<<<< HEAD
             <div id="week-div" style="with: 100%; height: 100%;"></div>
-=======
-            cammeber</br>
-             
+        </div>
+        
+        <div id="div3">
             <select id="field1" onchange="refresh()">
                 <option value="Blast Day Type">Blast Day Type</option>
                 <option value="City">City</option>
@@ -183,14 +183,9 @@
                 <option value="nb_terro">nb_terro</option>                
             </select>
 
-            <div id="piechart" style="width: 900px; height: 500px;"></div>
-            
->>>>>>> refs/remotes/origin/master
+            <div id="piechart" style="width: 80%; height: 100%;"></div>
         </div>
-        
-        <div id="div3">
-            
-        </div>
+
         <div id="div4">
             timeline like</br>
             laisser l'utilisateur trouver des correlations entre 2 variables (DTW) avec comme axe commun le temps
@@ -206,6 +201,34 @@
     <script src="js/charts.js"></script>
     <script>
     original_markers = markers;
+
+    //fixing the stats div positionning problem...
+    /*
+    $("#div1").css("position", "absolute");
+    $("#div2").css("position", "absolute");
+    $("#div3").css("position", "absolute");
+    $("#div3").css("position", "absolute");
+    
+    $("#div1").css("width", "50vw");
+    $("#div2").css("width", "50vw");
+    $("#div3").css("width", "50vw");
+    $("#div4").css("width", "50vw");
+
+
+    $("#div1").css("height", "50vh");
+    $("#div2").css("height", "50vh");
+    $("#div3").css("height", "50vh");
+    $("#div4").css("height", "50vh");
+
+    $("#div1").css("top", "0");
+    $("#div1").css("left", "0");
+
+    $("#div2").css("top", "50%");
+    $("#div3").css("left", "50%");
+    $("#div4").css("top", "50%");
+    $("#div4").css("left", "50%");
+    */
+
 
     //setting toastr
     toastr.options = {
@@ -236,10 +259,10 @@
 
         //set the map not draggrable not resizable and locked, so the user can use it easilly...
         var grid = $('.grid-stack').data('gridstack');
-	    $("#map").parent().parent().attr("id", "map_container");
-	    grid.movable('#map_container', false);
-	    grid.resizable('#map_container', false);
-	    grid.locked('#map_container', true);
+        $("#map").parent().parent().attr("id", "map_container");
+        grid.movable('#map_container', false);
+        grid.resizable('#map_container', false);
+        grid.locked('#map_container', true);
     });
 
     //refrehs the gps positions... and reset animation...
