@@ -162,10 +162,16 @@
 
         <div id="div2">
             <div id="week-div" style="with: 100%; height: 100%;"></div>
+            <select id="field3" onchange="refresh_day()">
+                <option value="nb_injured">nb_injured</option>
+                <option value="nb_kamikaze">nb_kamikaze</option>
+                <option value="nb_killed">nb_killed</option>
+                <option value="nb_terro">nb_terro</option>
+            </select>
         </div>
         
         <div id="div3">
-            <select id="field1" onchange="refresh()">
+            <select id="field1" onchange="refresh_piechart()">
                 <option value="Blast Day Type">Blast Day Type</option>
                 <option value="City">City</option>
                 <option value="day">day</option>
@@ -174,7 +180,7 @@
                 <option value="type_attack">type_attack</option>
             </select>
 
-            <select id="field2" onchange="refresh()">
+            <select id="field2" onchange="refresh_piechart()">
                 <option value="nb_injured">nb_injured</option>
                 <option value="nb_kamikaze">nb_kamikaze</option>
                 <option value="nb_killed">nb_killed</option>
@@ -207,6 +213,7 @@
     $("#div3").css("position", "absolute");
     $("#div3").css("position", "absolute");
     $("#piechart").css("position", "absolute");
+    $("#field3").css("position", "absolute");
 
     
     $("#div1").css("width", "50vw");
@@ -224,9 +231,10 @@
     $("#div1").css("left", "0");
 
     $("#div2").css("top", "50%");
+    $("#field3").css("top","85%");
+    $("#field3").css("left","35%");
     $("#div3").css("left", "50%");
     $("#piechart").css("left", "10%");
-
     $("#div4").css("top", "50%");
     $("#div4").css("left", "50%");
     
@@ -389,14 +397,11 @@
 
         //google.charts.setOnLoadCallback(weekDraw);
 
-        weekDraw();
+        //weekDraw();
         Bubble_city();
-        refresh();
+        refresh_piechart();
+        refresh_day();
     } 
-
-/////////
-    
- 
     
     </script>
 </body>

@@ -1,4 +1,4 @@
-function refresh(value) {
+function refresh_piechart() {
   var f1 = document.getElementById("field1");
   var f2 = document.getElementById("field2");
   var f1Val = f1.options[f1.selectedIndex].value;
@@ -9,6 +9,38 @@ function refresh(value) {
   
   var stats_on_visible_marker = getMyStats(f1Val,f2Val);
   drawChart(stats_on_visible_marker,f1Val,f2Val);
+}
+
+function refresh_day() {
+  var f3 = document.getElementById("field3");
+  var f3Val = f3.options[f3.selectedIndex].value;
+  var fDay = "day";
+
+  var stats_on_visible_marker = getMyStats(fDay,f3Val);
+  var data = google.visualization.arrayToDataTable(stats_on_visible_marker);
+
+  var materialOptions = {
+        chart: {
+          title: ' Attack by day of the week'
+        },
+        hAxis: {
+          title: 'Total Population',
+          minValue: 0,
+        },
+        vAxis: {
+          title: 'City'
+        },
+        bars: 'vertical',
+        legend: {
+            position: 'none'
+        },
+        height: parseInt($("#div2").css("height")) - 50,
+        width: parseInt($("#div2").css("width"))
+      };
+
+      var materialChart = new google.charts.Bar(document.getElementById('week-div'));
+      materialChart.draw(data, materialOptions);
+
 }
 
 function getCount(attName, countAttName, markers) {
