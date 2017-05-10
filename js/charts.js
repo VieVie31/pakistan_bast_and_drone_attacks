@@ -8,7 +8,6 @@ function refresh(value) {
   if (f1Val==f2Val) {return;}
   
   var stats_on_visible_marker = getMyStats(f1Val,f2Val);
-  console.log(stats_on_visible_marker);
   drawChart(stats_on_visible_marker,f1Val,f2Val);
 }
 

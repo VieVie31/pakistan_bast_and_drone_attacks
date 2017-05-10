@@ -175,7 +175,6 @@
             </select>
 
             <select id="field2" onchange="refresh()">
-                <option value="Temperature(C)">Temperature(C)</option>
                 <option value="nb_injured">nb_injured</option>
                 <option value="nb_kamikaze">nb_kamikaze</option>
                 <option value="nb_killed">nb_killed</option>
@@ -354,7 +353,6 @@
       var ma = get_visible_markers();
       list_ville = ville_list(ma);
       data_ville = [['CITY', 'civil killed', 'civil injured','killed by terrorist','people killed by drone','terrorist killed']];
-      console.log(data_ville);
       for (var i =0; i<ma.length; i++){
             if (data_ville[list_ville.indexOf(ma[i].City)+1] == undefined ) {
             data_ville[list_ville.indexOf(ma[i].City)+1] = [ma[i].City,0,0,0,0,0]; }
@@ -381,8 +379,6 @@
         height: parseInt($("#div1").css("height")),
         width: parseInt($("#div1").css("width"))
       };
-
-      console.log(data_ville);
 
       var chart = new google.visualization.BubbleChart(document.getElementById('bubbleCity'));
       chart.draw(data, options);
