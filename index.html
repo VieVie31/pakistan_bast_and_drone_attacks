@@ -158,8 +158,7 @@
 
         <!-- display the stats in 4 boxes -->
         <div id="div1">
-            bar chart</br>
-            nb d'attaques en fonction du jour de la semaine
+            <div id="week-div" style="with: 100%; height: 100;"></div>
         </div>
         <div id="div2">
             cammeber</br>
@@ -237,6 +236,7 @@
     });
 
     $("#stats_button").on('click', function() {
+        refresh_graphs();
         $("#stats").css("display", "block");
     });
 
@@ -245,6 +245,49 @@
     $(".rules-group-container").css("background", "white");
     $("body").css("overflow", "scroll");
     $("#builder-basic").css("text-align", "left");
+
+
+    //the charting suffs...
+    function refresh_graphs() {
+        function add(a, b) {
+          return a + b;
+        }
+
+        google.charts.load('current', {packages: ['corechart', 'bar']});
+        google.charts.setOnLoadCallback(weekDraw);
+
+        function weekDraw() {
+          var ma = get_visible_markers();
+          var data = google.visualization.arrayToDataTable([
+            ['Day', 'Drone Attacks', 'Blast Suicide Attacks'],
+            ['Mo', ma.map(function(m) { return (m.type_attack == "drone" && m.day == "Monday") ? 1 : 0}).reduce(add, 0), ma.map(function(m) { return (m.type_attack == "blast" && m.day == "Monday") ? 1 : 0}).reduce(add, 0)],
+            ['Tu', ma.map(function(m) { return (m.type_attack == "drone" && m.day == "Tuesday") ? 1 : 0}).reduce(add, 0), ma.map(function(m) { return (m.type_attack == "blast" && m.day == "Tuesday") ? 1 : 0}).reduce(add, 0)],
+            ['We', ma.map(function(m) { return (m.type_attack == "drone" && m.day == "Wednesday") ? 1 : 0}).reduce(add, 0), ma.map(function(m) { return (m.type_attack == "blast" && m.day == "Wednesday") ? 1 : 0}).reduce(add, 0)],
+            ['Th', ma.map(function(m) { return (m.type_attack == "drone" && m.day == "Thursday") ? 1 : 0}).reduce(add, 0), ma.map(function(m) { return (m.type_attack == "blast" && m.day == "Thursday") ? 1 : 0}).reduce(add, 0)],
+            ['Fr', ma.map(function(m) { return (m.type_attack == "drone" && m.day == "Friday") ? 1 : 0}).reduce(add, 0), ma.map(function(m) { return (m.type_attack == "blast" && m.day == "Friday") ? 1 : 0}).reduce(add, 0)],
+            ['Sa',  ma.map(function(m) { return (m.type_attack == "drone" && m.day == "Saturday") ? 1 : 0}).reduce(add, 0), ma.map(function(m) { return (m.type_attack == "blast" && m.day == "Saturday") ? 1 : 0}).reduce(add, 0)],
+            ['Su',  ma.map(function(m) { return (m.type_attack == "drone" && m.day == "Sunday") ? 1 : 0}).reduce(add, 0), ma.map(function(m) { return (m.type_attack == "blast" && m.day == "Sunday") ? 1 : 0}).reduce(add, 0)],
+          ]);
+
+          var materialOptions = {
+            chart: {
+              title: ' Attack by day of the week'
+            },
+            hAxis: {
+              title: 'Total Population',
+              minValue: 0,
+            },
+            vAxis: {
+              title: 'City'
+            },
+            bars: 'vertical',
+            legend: {position: 'none'}
+          };
+          var materialChart = new google.charts.Bar(document.getElementById('week-div'));
+          materialChart.draw(data, materialOptions);
+        }
+    } 
+
     </script>
 </body>
 </html>
