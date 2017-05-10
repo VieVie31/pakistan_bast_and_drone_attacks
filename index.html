@@ -154,7 +154,6 @@
 
     <div id="stats">
         <button id="close_stats">&#735;</button>
-        <h1 style='text-align:center;'>some stats here...</h1>
 
         <!-- display the stats in 4 boxes -->
         <div id="div1">
@@ -203,11 +202,13 @@
     original_markers = markers;
 
     //fixing the stats div positionning problem...
-    /*
+    
     $("#div1").css("position", "absolute");
     $("#div2").css("position", "absolute");
     $("#div3").css("position", "absolute");
     $("#div3").css("position", "absolute");
+    $("#piechart").css("position", "absolute");
+
     
     $("#div1").css("width", "50vw");
     $("#div2").css("width", "50vw");
@@ -225,9 +226,11 @@
 
     $("#div2").css("top", "50%");
     $("#div3").css("left", "50%");
+    $("#piechart").css("left", "10%");
+
     $("#div4").css("top", "50%");
     $("#div4").css("left", "50%");
-    */
+    
 
 
     //setting toastr
@@ -339,8 +342,8 @@
         legend: {
             position: 'none'
         },
-        height: parseInt($("#div1").css("height")) - 50,
-        width: parseInt($("#div1").css("width"))
+        height: parseInt($("#div2").css("height")) - 50,
+        width: parseInt($("#div2").css("width"))
       };
 
       var materialChart = new google.charts.Bar(document.getElementById('week-div'));
@@ -375,8 +378,8 @@
         bubble: {textStyle: {fontSize: 11}},
         explorer: {},
         colorAxis: {colors: ['yellow', 'red']},
-        height: parseInt($("#div2").css("height")),
-        width: parseInt($("#div2").css("width"))
+        height: parseInt($("#div1").css("height")),
+        width: parseInt($("#div1").css("width"))
       };
 
       console.log(data_ville);
