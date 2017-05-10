@@ -158,15 +158,14 @@
 
         <!-- display the stats in 4 boxes -->
         <div id="div1">
-            <div id="week-div" style="with: 100%; height: 100%;"></div>
+            <div id="bubbleCity" style="width: 100%; height: 100%;"></div>
         </div>
         <div id="div2">
-            cammeber</br>
-            proportion de morts en fonction du type de cible et/ou religion
+            <div id="week-div" style="with: 100%; height: 100%;"></div>
         </div>
+        
         <div id="div3">
-            timeline</br>
-            nb attaques par date par nb morts
+            
         </div>
         <div id="div4">
             timeline like</br>
@@ -254,6 +253,16 @@
       return a + b;
     }
 
+    function ville_list(m) {
+        li =[];
+        for (var i=0;i<m.length;i++){
+            if (li.indexOf(m[i].City)==-1){
+                li.push(m[i].City);
+            }
+        }
+        return li;
+      }
+
     function weekDraw() {
       var ma = get_visible_markers();
       var data = google.visualization.arrayToDataTable([
@@ -282,7 +291,7 @@
         legend: {
             position: 'none'
         },
-        height: parseInt($("#div1").css("height")),
+        height: parseInt($("#div1").css("height")) - 50,
         width: parseInt($("#div1").css("width"))
       };
 
@@ -290,14 +299,57 @@
       materialChart.draw(data, materialOptions);
     }
 
+    function Bubble_city() {
+      var ma = get_visible_markers();
+      list_ville = ville_list(ma);
+      data_ville = [['CITY', 'civil killed', 'civil injured','killed by terrorist','people killed by drone','terrorist killed']];
+      console.log(data_ville);
+      for (var i =0; i<ma.length; i++){
+            if (data_ville[list_ville.indexOf(ma[i].City)+1] == undefined ) {
+            data_ville[list_ville.indexOf(ma[i].City)+1] = [ma[i].City,0,0,0,0,0]; }
+            if (ma[i].type_attack=="drone"){
+                data_ville[list_ville.indexOf(ma[i].City)+1][4] += parseInt(ma[i].nb_killed) + parseInt(ma[i].nb_injured);}
+            if (ma[i].type_attack=="blast"){
+                data_ville[list_ville.indexOf(ma[i].City)+1][3] += parseInt(ma[i].nb_killed);}
+
+            data_ville[list_ville.indexOf(ma[i].City)+1][1] += parseInt(ma[i].nb_killed) ;      
+            data_ville[list_ville.indexOf(ma[i].City)+1][2] += parseInt(ma[i].nb_injured);
+            data_ville[list_ville.indexOf(ma[i].City)+1][5] += parseInt(ma[i].nb_terro);
+      }
+      var data = google.visualization.arrayToDataTable(data_ville);
+
+      var options = {
+
+        title: 'Correlation of people killed by terrorist with people killed by drone' +
+               ' sorted by city',
+        hAxis: {title: 'civil killed or injured by drone'},
+        vAxis: {title: 'civil killed or injured by terrorist'},
+        bubble: {textStyle: {fontSize: 11}},
+        explorer: {},
+        colorAxis: {colors: ['yellow', 'red']},
+        height: parseInt($("#div2").css("height")),
+        width: parseInt($("#div2").css("width"))
+      };
+
+      console.log(data_ville);
+
+      var chart = new google.visualization.BubbleChart(document.getElementById('bubbleCity'));
+      chart.draw(data, options);
+    }
+
+
     function refresh_graphs() {
 
         //google.charts.setOnLoadCallback(weekDraw);
 
         weekDraw();
-        
+        Bubble_city();
     } 
 
+/////////
+    
+ 
+    
     </script>
 </body>
 </html>
