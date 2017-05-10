@@ -16,8 +16,18 @@ function refresh_day() {
   var f3Val = f3.options[f3.selectedIndex].value;
   var fDay = "day";
 
-  var stats_on_visible_marker = getMyStats(fDay,f3Val);
-  var data = google.visualization.arrayToDataTable(stats_on_visible_marker);
+  //var stats_on_visible_marker = getMyStats(fDay,f3Val);
+  var ma = get_visible_markers();
+  var data = google.visualization.arrayToDataTable([
+        ['Day', 'Drone Attacks', 'Blast Suicide Attacks'],
+        ['Mo', ma.map(function(m) { return (m.type_attack == "drone" && parseInt(m[f3Val]) > 0 && m.day == "Monday") ? 1 : 0}).reduce(add, 0), ma.map(function(m) { return (m.type_attack == "blast" && parseInt(m[f3Val]) > 0 && m.day == "Monday") ? 1 : 0}).reduce(add, 0)],
+        ['Tu', ma.map(function(m) { return (m.type_attack == "drone" && parseInt(m[f3Val]) > 0 && m.day == "Tuesday") ? 1 : 0}).reduce(add, 0), ma.map(function(m) { return (m.type_attack == "blast" && parseInt(m[f3Val]) > 0 && m.day == "Tuesday") ? 1 : 0}).reduce(add, 0)],
+        ['We', ma.map(function(m) { return (m.type_attack == "drone" && parseInt(m[f3Val]) > 0 && m.day == "Wednesday") ? 1 : 0}).reduce(add, 0), ma.map(function(m) { return (m.type_attack == "blast" && parseInt(m[f3Val]) > 0 && m.day == "Wednesday") ? 1 : 0}).reduce(add, 0)],
+        ['Th', ma.map(function(m) { return (m.type_attack == "drone" && parseInt(m[f3Val]) > 0 && m.day == "Thursday") ? 1 : 0}).reduce(add, 0), ma.map(function(m) { return (m.type_attack == "blast" && parseInt(m[f3Val]) > 0 && m.day == "Thursday") ? 1 : 0}).reduce(add, 0)],
+        ['Fr', ma.map(function(m) { return (m.type_attack == "drone" && parseInt(m[f3Val]) > 0 && m.day == "Friday") ? 1 : 0}).reduce(add, 0), ma.map(function(m) { return (m.type_attack == "blast" && parseInt(m[f3Val]) > 0 && m.day == "Friday") ? 1 : 0}).reduce(add, 0)],
+        ['Sa', ma.map(function(m) { return (m.type_attack == "drone" && parseInt(m[f3Val]) > 0 && m.day == "Saturday") ? 1 : 0}).reduce(add, 0), ma.map(function(m) { return (m.type_attack == "blast" && parseInt(m[f3Val]) > 0 && m.day == "Saturday") ? 1 : 0}).reduce(add, 0)],
+        ['Su', ma.map(function(m) { return (m.type_attack == "drone" && parseInt(m[f3Val]) > 0 && m.day == "Sunday") ? 1 : 0}).reduce(add, 0), ma.map(function(m) { return (m.type_attack == "blast" && parseInt(m[f3Val]) > 0 && m.day == "Sunday") ? 1 : 0}).reduce(add, 0)],
+      ]);
 
   var materialOptions = {
         chart: {
