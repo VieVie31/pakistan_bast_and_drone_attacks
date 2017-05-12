@@ -91,6 +91,11 @@
 
             return hash;
         };
+
+        function hashJSON(j) { //really sensitive but it's a first version...
+            var s = JSON.stringify(j);
+            return s.hashCode();
+        }
     </script>
 
     <div class="container-fluid">
