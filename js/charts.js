@@ -1,5 +1,68 @@
-google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.load('current', {packages: ['corechart', 'bar','annotatedtimeline']});
+google.charts.setOnLoadCallback(timeChart)
 
+function utcformat(d) {
+  d = new Date(d);
+  var tail = ' GMT', D = [d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate()];
+  var i= 3;
+  while (i) {
+    --i;
+    if (D[i]<10) 
+      D[i]= '0'+D[i];
+  }
+  d =new Date(D[0],D[1],D[2]);
+  console.log(d);
+  return d
+}
+
+function jpp(m) {
+        var li = [];
+        for (var i=0;i<m.length;i++){
+            if (m[i].type_attack=='blast'){
+              li.push([utcformat(parseInt(m[i].timestamp)*1000),parseInt(m[i].nb_killed),0]);
+            }
+            else{
+              li.push([utcformat(parseInt(m[i].timestamp)*1000),0,parseInt(m[i].nb_killed)]);
+            }
+            
+        }
+        
+     
+
+        var l = [['DATE', 'people killed by terrorist', 'people killed by american']].concat(li);
+        
+        return l;
+        
+      }
+
+      function timeChart() {
+        var ma = get_visible_markers();
+ 
+        var data = google.visualization.arrayToDataTable(jpp(ma));
+
+        var options = {
+          title: 'TERRORRISTE',
+          hAxis: {title: 'date',  titleTextStyle: {color: '#333'}},
+          vAxis: {minValue: 0},
+          animation:{
+            duration: 1000,
+            easing: 'linear',
+            startup: true
+          },
+          height: 600,
+          width: window.innerWidth,
+          theme: 'material',
+          title: 'Company Performance',
+        explorer: { 
+        actions: ['dragToZoom', 'rightClickToReset'],
+        axis: 'horizontal',
+        keepInBounds: true,
+        maxZoomIn: 4.0
+}
+        };
+        var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('time_chart'));
+        chart.draw(data, {displayAnnotations: true});
+      }
 
 function refresh_piechart() {
   var f1 = document.getElementById("field1");
@@ -154,4 +217,5 @@ function refresh_graphs() {
     Bubble_city();
     refresh_piechart();
     refresh_day();
+    timeChart();
 } 
