@@ -77,7 +77,7 @@ function save_my_markers(markers, online) {
 	if (online) {
 		var database = firebase.database();
 		var t = database.ref('version/' + current_user.uid);
-		t.on("value", function(v) {
+		t.once("value", function(v) {
 			var online_version = parseInt(v.val().version); 
 
 			if (online_version != dataset_version) {
@@ -113,7 +113,7 @@ function action_when_sign_in() {
 
 	var database = firebase.database();
 	var t = database.ref('version/' + current_user.uid);
-	t.on("value", function(v) { 
+	t.once("value", function(v) { 
 		var online_version = 0;
 
 		if (!v.val()) {
@@ -130,7 +130,7 @@ function action_when_sign_in() {
 
 			var database = firebase.database();
 			var ref = database.ref('markers/' + current_user.uid);
-			ref.on("value", function (m) {
+			ref.once("value", function (m) {
 				//retrieve my markers...
 				markers = m.val().markers;
 
