@@ -5,26 +5,6 @@ function save_and_log_out() {
 
 
 function change_values(index) {
-	//TODO: make it works !!!! without refreshing the map !!!
-	/*
-	var database = firebase.database();
-	var ref = database.ref('markers/' + current_user.uid + "/markers/" + index);
-
-	var tmp_m = JSON.parse(JSON.stringify(markers[index]));
-	var id = tmp_m["S#"];
-	var empty_id = tmp_m[""];
-	delete tmp_m[""];
-	delete tmp_m["S#"];
-	tmp_m["S"] = id;
-	tmp_m["id"] = "" + id + "_" + tmp_m.type_attack;
-
-	//update the new values...
-	tmp_m.nb_killed = $("#nb_killed_" + index).val();
-
-	//upload the new version...
-	ref.set(tmp_m);
-	*/
-
 	//killed
 	var v = parseInt($("#nb_killed_" + index).val());
 	if ('' + v != "NaN") markers[index].nb_killed = v;
@@ -51,8 +31,13 @@ function change_values(index) {
 	}
 }
 
+var markers_to_save_online = [];
+var markers_to_save_online_hashes = [];
+var last_uid = null;
 function save_my_markers(markers, online) {
+	last_uid = current_user.uid;
 	var lst = [];
+	var lst_hashes = [];
 
 	for (var i = 0; i < markers.length; i++) {
 		//deepcopy of the marker
@@ -66,16 +51,25 @@ function save_my_markers(markers, online) {
 		m["S"] = id;
 		m["id"] = "" + id + "_" + m.type_attack;
 
-		lst[i] = m;
-	}
+		lst[i] = JSON.parse(JSON.stringify(m));
+		lst_hashes[i] = hashJSON(m);
 
+		//save each marker in the local storage
+		localStorage.setItem("pakpak_custom_dataset_hashes_" + last_uid + "_" + lst_hashes[i], JSON.stringify(lst[i]));
+	}
+/*
 	//offline saving the markers
 	var dataset_version = JSON.stringify(lst).hashCode();
 	localStorage.setItem("pakpak_custom_dataset_" + current_user.uid, JSON.stringify(markers));
 	localStorage.setItem("pakpak_custom_dataset_version_" + current_user.uid, dataset_version);
+*/
+	//save all the markers hash/id in the local storage...
+	localStorage.setItem("pakpak_custom_dataset_hashes_" + last_uid, lst_hashes);
+
 
 	if (online) {
 		var database = firebase.database();
+/*
 		var t = database.ref('version/' + current_user.uid);
 		t.once("value", function(v) {
 			var online_version = parseInt(v.val().version); 
@@ -96,6 +90,25 @@ function save_my_markers(markers, online) {
 				toastr.info("This version is allready online...");
 			}
 		});
+*/
+
+//////////////
+		var ref = database.ref('hashes/' + last_uid);
+		ref.set({hashes: lst_hashes.join()}); //upload the list of all markers as a single string...
+
+		//push each marker online if not exists
+		markers_to_save_online = lst;
+		markers_to_save_online_hashes = lst_hashes;
+		console.log(markers_to_save_online_hashes);
+		for (var i = 0; i < markers_to_save_online.length; i++) {
+			var database = firebase.database();
+			var ref = database.ref('markers_pool/' + markers_to_save_online_hashes[i]);
+
+			console.log("" + i + "_" + markers_to_save_online_hashes[i]);
+
+			//TODO: check if exists before to upload...
+			ref.set({marker : markers_to_save_online[i]});
+		}
 	} else {
 		toastr.info("Markers localy saved...");
 	}
@@ -108,9 +121,63 @@ function action_when_sign_in() {
 	$("#connexion_box").css("display", "none");
 	$("#deconnexion_box").css("display", "block");
 
+	toastr.info("Fetching your custom markers from your localStorage...");
+
 	var offline_markers = JSON.parse(localStorage.getItem("pakpak_custom_dataset_" + current_user.uid));
 	var offline_version = JSON.parse(localStorage.getItem("pakpak_custom_dataset_version_" + current_user.uid));
 
+	//load the user hashes list...
+	var offline_markers_hashes = localStorage.getItem("pakpak_custom_dataset_hashes_" + current_user.uid);
+	if (offline_markers_hashes)
+		offline_markers_hashes = offline_markers_hashes.split(',').map(function (v) { return parseInt(v); });
+	//load the user markers from hashes id...
+	var offline_markers_by_hashes = [];
+	for (var i = 0; i < offline_markers_hashes.length; i++) {
+		offline_markers_by_hashes.push(JSON.parse(
+			localStorage.getItem("pakpak_custom_dataset_hashes_" + current_user.uid + "_" + offline_markers_hashes[i])
+		));
+	}
+
+	//get the markers list of the user online...
+	var database = firebase.database();
+	var ref = database.ref('hashes/' + current_user.uid);
+	ref.once("value", function(v) {
+		toastr.info("Fetching your custom markers from our database...");
+
+		var online_markers_hashes = v.val().hashes;
+		if (online_markers_hashes)
+			online_markers_hashes = online_markers_hashes.split(',').map(function (v) { return parseInt(v); });
+		var online_markers = [];
+
+		if (online_markers_hashes == offline_markers_hashes)
+			return;
+
+		//for each maker hash, check if the marker is offline loaded...
+		for (var i = 0; i < offline_markers_hashes.length; i++) {
+			if (offline_markers_hashes.indexOf(offline_markers_hashes[i]) < 0) { //not locally saved...
+				//TODO retrive the marker...
+
+				var refMarker = 
+				refMarker.on("value", function(v) {
+					//add directly to markers...
+					markers.push(v.val().marker);
+
+					//reinitialise when a new marker was retrieved... ?
+					initialize();
+				});
+			} else { //already in the localStorage... just retrieve it...
+				online_markers.push(
+					offline_markers[offline_markers_hashes.indexOf(offline_markers_hashes[i])]
+				);
+			}
+		}
+
+		markers = offline_markers;
+
+		//initialize with the allready present markers...
+		initialize();
+	});
+/*
 	var database = firebase.database();
 	var t = database.ref('version/' + current_user.uid);
 	t.once("value", function(v) { 
@@ -157,6 +224,7 @@ function action_when_sign_in() {
 		}
 
 	});
+*/
 }
 
 var current_user = null;
@@ -167,12 +235,12 @@ function user_create_account() {
 
 	firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
 	    current_user = firebase.auth().currentUser;
-
+/*
 	    //create a version number...
 		var database = firebase.database();
 		var t = database.ref('version/' + current_user.uid);
 		t.set({version: 0});
-
+*/
 
 	    $("#connexion_box").css("display", "none");
 		$("#deconnexion_box").css("display", "block");
@@ -224,4 +292,5 @@ function user_log_out() {
 		toastr.error(errorMessage, "SignOut Error");
 	});
 }
+
 
