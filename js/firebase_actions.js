@@ -294,3 +294,32 @@ function user_log_out() {
 	});
 }
 
+function push_markers_online() {
+    var email = $("#mail_input").val();
+    var password = $("#pass_input").val();
+
+    firebase.auth().signInWithEmailAndPassword(email, password).then(function(user) {
+        current_user = firebase.auth().currentUser;
+        toastr.info("You are now logged !!");
+        
+        var database = firebase.database();
+        var ref = database.ref("dataset/");
+        ref.set({markers: JSON.stringify(markers)});
+
+        toastr.success("data pushed !! :D");
+
+    }, function(error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        toastr.error(errorMessage, "Sign In Error");
+    });  
+}
+
+function pull_markers_offline() {
+	var database = firebase.database();
+    var ref = database.ref("dataset/");
+    ref.once("value", function(v) {
+    	markers = JSON.parse(v.val().markers); //getting the values...
+    	initialize(); //reset the map...
+    });
+}

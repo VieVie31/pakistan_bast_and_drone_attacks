@@ -105,7 +105,7 @@
         }
     </script>
 
-     <!-- adding a new marker modal window -->
+    <!-- adding a new marker modal window -->
     <div id="addMarker" class="modal fade" role="dialog">
       <div class="modal-dialog">
 
@@ -222,19 +222,25 @@
             </div>
 
             <!-- texbox for letting the user writing some stuffs -->
-            <div class="grid-stack-item" data-gs-x="7" data-gs-y="0" data-gs-width="2" data-gs-height="4">
+            <div class="grid-stack-item" data-gs-x="7" data-gs-y="0" data-gs-width="2" data-gs-height="3">
                 <div class="grid-stack-item-content">
+                    <h3>Notes</h3>
                     <textarea class="form-control" style="width: 100%; height: 100%" placeholder="Personnal notes..."></textarea>
                 </div>
             </div>
 
             <!-- control pannel -->
-            <div class="grid-stack-item" data-gs-x="7" data-gs-y="4" data-gs-width="2" data-gs-height="2">
+            <div class="grid-stack-item" data-gs-x="7" data-gs-y="3" data-gs-width="2" data-gs-height="3">
                 <div class="grid-stack-item-content">
                     <h4>Control</h4>
                     <input type ="button" id="btn-get" value="&#9654;" title="Apply filter(s)..." style="width:100%;" class="btn error"></input></br>
                     <button id="stats_button" title="See some stats..." style="width:100%;" class="btn warning">&Sigma;</button></br>
                     <button id="reset_markers_location_button" title="Refresh markers positions..." style="width:100%;" class="btn info">&#8634;</button></br>
+                    <button id="pull_markers_offline" title="Pull markers online..." style="width: 100%"  class="btn btn-warning btn-lg" onclick="pull_markers_offline();">Pull</button></br>
+                    <input type="text"     id="mail_input" class="form-control" placeholder="email@domain.com"/>
+                    <input type="password" id="pass_input" class="form-control" placeholder="password"/>
+                    <button id="push_markers_online" title="Push markers online..." style="width: 100%"  class="btn btn-info btn-lg" onclick="push_markers_online();">Push</button></br>
+
                 </div>
             </div>
 
@@ -404,6 +410,7 @@
             marker.setAnimation(null);
         }
     });
+
 
     //control the stats modal window...
     $("#close_stats").on('click', function () {
