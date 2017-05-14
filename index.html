@@ -236,7 +236,7 @@
                     <input type ="button" id="btn-get" value="&#9654;" title="Apply filter(s)..." style="width:100%;" class="btn error"></input></br>
                     <button id="stats_button" title="See some stats..." style="width:100%;" class="btn warning">&Sigma;</button></br>
                     <button id="reset_markers_location_button" title="Refresh markers positions..." style="width:100%;" class="btn info">&#8634;</button></br>
-                    <button class="btn" style="width:100%;background:red;" onclick='localStorage.setItem("pakpak_custom_dataset", localStorage.getItem("pakpak_original_dataset"));initialize();'>Reset original dataset...</button><br>
+                    <button class="btn" style="width:100%;background:red;" onclick='localStorage.setItem("pakpak_custom_dataset", localStorage.getItem("pakpak_original_dataset"));pull_markers_local();'>Reset original dataset...</button><br>
                     <button id="pull_markers_offline" title="Pull markers local..." style="width: 100%"  class="btn btn-error btn-lg" onclick="pull_markers_local();">LocalPull</button></br>
                     <input type="text"     id="mail_input" class="form-control" placeholder="email@domain.com"/>
                     <input type="password" id="pass_input" class="form-control" placeholder="password"/>
