@@ -22,11 +22,11 @@ function make_info(data, index_of_data) {
 
   return '<div id="content">'+
   '<div id="bodyContent">'+
-  '<table>'+
+  '<table id="infobulle_table">'+
   '<caption>' + data.Location + '</caption>'+
   '<tr>'+
   '<td>' + "DATE" + '</td>'+
-  '<td><input type="text" value="' + date[2] + '" placeholder="day" style="width:33px" onchange="change_values(' + index_of_data + ');"/>' + '<input type="text" value="' + date[1] + '" placeholder="month" style="width:33px" onchange="change_values(' + index_of_data + ');"/>' + '<input type="text" value="' + date[0] + '" placeholder="year" style="width:33px" onchange="change_values(' + index_of_data + ');"/>' + '</td>'+
+  '<td><input type="text" id="day_' + index_of_data + '" value="' + date[2] + '" placeholder="day" style="width:33px;border:none;" onchange="change_values(' + index_of_data + ');"/>' + '<input type="text" id="month_' + index_of_data + '" value="' + date[1] + '" placeholder="month" style="width:33px;border:none;" onchange="change_values(' + index_of_data + ');"/>' + '<input type="text" id="year_' + index_of_data + '" value="' + date[0] + '" placeholder="year" style="width:33px;border:none;" onchange="change_values(' + index_of_data + ');"/>' + '</td>'+
   '</tr>'+
 
   '<tr>'+

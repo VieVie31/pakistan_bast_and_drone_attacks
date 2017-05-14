@@ -25,6 +25,33 @@ function change_values(index) {
 	ref.set(tmp_m);
 	*/
 
+	//TODO: save the GPS coordinates ??
+
+	//day
+	var day = parseInt($("#day_" + index).val().trim());
+	if ('' + day != "NaN" && day < 31 && day > 0) day = day;
+	else {
+		toastr.error("The only 0 < 'Integer' < 32 accepted !!");
+		//TODO: reset the old value
+		return;
+	}
+	//month
+	var month = parseInt($("#month_" + index).val().trim());
+	if ('' + month != "NaN" && month < 13 && month > 0) month = month;
+	else {
+		toastr.error("The only 0 < 'Integer' < 13 accepted !!");
+		//TODO: reset the old value
+		return;
+	}
+	//year
+	var year = parseInt($("#year_" + index).val().trim());
+	if ('' + year != "NaN" && year > 0) year = year;
+	else {
+		toastr.error("The only 0 < 'Integer' accepted !!");
+		//TODO: reset the old value
+		return;
+	}
+	markers[index].timestamp = new Date(''+day+'/'+month+'/'+year).getTime() / 1000;
 	//city
 	var v = $("#city_" + index).val().trim();
 	if ('' + v) markers[index].City = v;
