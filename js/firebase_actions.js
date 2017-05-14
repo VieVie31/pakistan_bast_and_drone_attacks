@@ -25,11 +25,19 @@ function change_values(index) {
 	ref.set(tmp_m);
 	*/
 
+	//city
+	var v = $("#city_" + index).val().trim();
+	if ('' + v) markers[index].City = v;
+	else {
+		toastr.error("city name should not be empty !! :'(");
+		$("#city_" + index).val(markers[index].City.trim());
+		return;
+	}
 	//killed
 	var v = parseInt($("#nb_killed_" + index).val());
 	if ('' + v != "NaN") markers[index].nb_killed = v;
 	else {
-		alert("The only 'Integer' accepted !!");
+		toastr.error("The only 'Integer' accepted !!");
 		$("#nb_killed_" + index).val(markers[index].nb_killed); //reset the old value
 		return;
 	}
@@ -37,7 +45,7 @@ function change_values(index) {
 	var v = parseInt($("#nb_injured_" + index).val());
 	if ('' + v != "NaN") markers[index].nb_injured = v;
 	else {
-		alert("The only 'Integer' accepted !!");
+		toastr.error("The only 'Integer' accepted !!");
 		$("#nb_injured_" + index).val(markers[index].nb_injured);
 		return;
 	}
@@ -45,7 +53,7 @@ function change_values(index) {
 	var v = parseFloat($("#nb_terro_" + index).val());
 	if ('' + v != "NaN") markers[index].nb_terro = v;
 	else {
-		alert("Only 'Integer' or 'Float' accepted !!");
+		toastr.error("Only 'Integer' or 'Float' accepted !!");
 		$("#nb_terro_" + index).val(markers[index].nb_terro);
 		return;
 	}

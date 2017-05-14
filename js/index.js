@@ -18,18 +18,20 @@ function utcformat(d) {
 }
 
 function make_info(data, index_of_data) {
+  var date = utcformat(parseInt(data.timestamp) * 1000).split(' ')[0].split('/');
+
   return '<div id="content">'+
   '<div id="bodyContent">'+
   '<table>'+
   '<caption>' + data.Location + '</caption>'+
   '<tr>'+
   '<td>' + "DATE" + '</td>'+
-  '<td>' + utcformat(parseInt(data.timestamp) * 1000) + '</td>'+
+  '<td><input type="text" value="' + date[2] + '" placeholder="day" style="width:33px" onchange="change_values(' + index_of_data + ');"/>' + '<input type="text" value="' + date[1] + '" placeholder="month" style="width:33px" onchange="change_values(' + index_of_data + ');"/>' + '<input type="text" value="' + date[0] + '" placeholder="year" style="width:33px" onchange="change_values(' + index_of_data + ');"/>' + '</td>'+
   '</tr>'+
 
   '<tr>'+
   '<td>' + "CITY" + '</td>'+
-  '<td>' + data.City + '</td>'+
+  '<td><input id="city_' + index_of_data + '" type="text" value="' + data.City + '" placeholder="city..." onchange="change_values(' + index_of_data + ');"/></td>'+
   '</tr>'+
 
   '<tr>'+
