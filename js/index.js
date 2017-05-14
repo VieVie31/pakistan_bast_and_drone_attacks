@@ -75,6 +75,8 @@ function make_info(data, index_of_data) {
 }
 
 function initialize() {
+    markerObjects = []; //do not forget to reinitialise the markerobjects list... :p
+
     var myOptions = {
       center: new google.maps.LatLng(markers[0].Latitude, markers[0].Longitude),
       zoom: 5,

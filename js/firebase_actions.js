@@ -94,17 +94,21 @@ function save_local() {
 
 	var lst = [];
 	for (var i = 0; i < markers.length; i++) {
-		var m = JSON.stringify(markers[i]);
-		lst[i] = JSON.parse(JSON.stringify(m));
-		localStorage.setItem("pakpak_custom_dataset"+i, JSON.stringify(lst[i]));
+		if (!markers[i].supprime) {
+			var m = JSON.stringify(markers[i]);
+			lst.push(JSON.parse(JSON.stringify(m)));
+			localStorage.setItem("pakpak_custom_dataset"+i, JSON.stringify(lst[i]));
+		}
 	};
-	localStorage.setItem("pakpak_custom_dataset", lst);
+	localStorage.setItem("pakpak_custom_dataset", '[' + lst + ']');
 	//console.log(localStorage);
-	//console.log(localStorage.getItem("pakpak_original_dataset"));
+	//console.log(JSON.parse(localStorage.getItem("pakpak_original_dataset")));
 }
 
 function delete_marker(index) {
 	markerObjects[index].setMap(null);
+
+	markers[index].supprime = true;
 
 	markers[index] = "";
 	for (var i = index+1; i<markers.length; i++){
@@ -485,3 +489,17 @@ function pull_markers_offline() {
         toastr.error(errorMessage, "Sign In Error");
     }); 
 }
+
+function pull_markers_local() {
+	var dts = localStorage.getItem("pakpak_custom_dataset");
+	if (!dts) {
+		toastr.error("Nothing in the localStorage... :'(");
+		return;
+	}
+
+	markers = JSON.parse(dts);
+	initialize();
+}
+
+
+
