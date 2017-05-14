@@ -76,6 +76,7 @@ function make_info(data, index_of_data) {
 
 function initialize() {
     markerObjects = []; //do not forget to reinitialise the markerobjects list... :p
+    $("#overlay").html(""); //reset the list...
 
     var myOptions = {
       center: new google.maps.LatLng(markers[0].Latitude, markers[0].Longitude),

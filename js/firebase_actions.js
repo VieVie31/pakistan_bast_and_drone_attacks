@@ -110,6 +110,8 @@ function delete_marker(index) {
 
 	markers[index].supprime = true;
 
+	$("#overlay div")[index].style.display = "none";//hide in the list...
+
 	for (var i = index+1; i<markers.length; i++){
 		markers[i][""] = markers[i][""]-1;
 		markers[i]["S#"] = markers[i]["S#"]-1; 
