@@ -300,7 +300,9 @@ function push_markers_online() {
 
     firebase.auth().signInWithEmailAndPassword(email, password).then(function(user) {
         current_user = firebase.auth().currentUser;
-        toastr.info("You are now logged !!");
+
+        $("#mail_input").css("display", "none");
+        $("#pass_input").css("display", "none");
         
         var database = firebase.database();
         var ref = database.ref("dataset/");
@@ -316,10 +318,27 @@ function push_markers_online() {
 }
 
 function pull_markers_offline() {
-	var database = firebase.database();
-    var ref = database.ref("dataset/");
-    ref.once("value", function(v) {
-    	markers = JSON.parse(v.val().markers); //getting the values...
-    	initialize(); //reset the map...
-    });
+	var email = $("#mail_input").val();
+    var password = $("#pass_input").val();
+
+    firebase.auth().signInWithEmailAndPassword(email, password).then(function(user) {
+        current_user = firebase.auth().currentUser;
+
+        $("#mail_input").css("display", "none");
+        $("#pass_input").css("display", "none");
+        
+        var database = firebase.database();
+	    var ref = database.ref("dataset/");
+	    ref.once("value", function(v) {
+	    	markers = JSON.parse(v.val().markers); //getting the values...
+	    	initialize(); //reset the map...
+	    });
+
+        toastr.success("data pulled !! :D");
+
+    }, function(error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        toastr.error(errorMessage, "Sign In Error");
+    }); 
 }
