@@ -34,6 +34,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" media="screen" />
+    <!-- bootstrap-select -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
     <!-- toastr : for notifications managing... -->
     <link href="./css/toastr.min.css" rel="stylesheet"/>
     <script src="./js/toastr.min.js"></script>
@@ -98,6 +101,104 @@
         }
     </script>
 
+    <!-- adding a new marker modal window -->
+    <div id="addMarker" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Add a new Marker...</h4>
+          </div>
+          <div class="modal-body">
+            <table class="table table-striped">
+                <tr>
+                    <th>Field Name</th>
+                    <th>Field Value</th>
+                </tr>
+
+                <tr>
+                    <td>TYPE ATTACK</td>
+                    <td>
+                        <select id="select_attack_type" class="selectpicker">
+                          <option value="drone">Drone</option> 
+                          <option value="blast" selected>Blast</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Date</td>
+                    <td><input type="date" class="form-control" value="Working day"></td>
+                </tr>
+
+                <tr>
+                    <td>Day type</td>
+                    <td><input type="text" class="form-control" value="Working day"></td>
+                </tr>
+
+                <tr>
+                    <td>City</td>
+                    <td><input type="text" class="form-control" placeholder="city..." required></td>
+                </tr>
+
+                <tr>
+                    <td>#KILLED</td>
+                    <td><input type="text" class="form-control" placeholder="nb killed..." required></td>
+                </tr>
+
+                <tr>
+                    <td>#INJURED</td>
+                    <td><input type="text" class="form-control" placeholder="nb injured..." required></td>
+                </tr>
+
+                <tr>
+                    <td>#NB_TERRO</td>
+                    <td><input type="text" class="form-control" placeholder="nb terrorists/kamikases..." required></td>
+                </tr>
+
+                <tr>
+                    <td>TARGET TYPE</td>
+                    <td>
+                        <select id="select_target_type" class="selectpicker">
+                          <option value="Unknow">Unknow</option> 
+                          <option value="Civilian" selected>Civilian</option>
+                          <option value="Government" selected>Government</option>
+                          <option value="Law" selected>Law</option>
+                          <option value="Religious" selected>Religious</option>
+                          <option value="Army" selected>Army</option>
+                          <option value="Foreign" selected>Foreign</option>
+                          <option value="Terrorist" selected>Terrorist</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>RELIGIOUS TARGET</td>
+                    <td>
+                        <select id="select_religious_type" class="selectpicker">
+                            <option value="None">None</option>
+                            <option value="Christian">Christian</option>
+                            <option value="Sunni">Sunni</option>
+                            <option value="Ahmedi">Ahmedi</option>
+                            <option value="Shiite">Shiite</option>
+                            <option value="Jews">Jews</option>
+                            <option value="Extremist">Extremist</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">MAKE IT !</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <div class="container-fluid">
         <br/>
         <div class="grid-stack">
@@ -139,9 +240,9 @@
             <div class="grid-stack-item" data-gs-x="7" data-gs-y="4" data-gs-width="2" data-gs-height="2">
                 <div class="grid-stack-item-content">
                     <h4>Control</h4>
-                    <input type ="button" id="btn-get" value="&#9654;" title="Apply filter(s)..." style="width:100%;"></input></br>
-                    <button id="stats_button" title="See some stats..." style="width:100%;">&Sigma;</button></br>
-                    <button id="reset_markers_location_button" title="Refresh markers positions..." style="width:100%;">&#8634;</button></br>
+                    <input type ="button" id="btn-get" value="&#9654;" title="Apply filter(s)..." style="width:100%;" class="btn error"></input></br>
+                    <button id="stats_button" title="See some stats..." style="width:100%;" class="btn warning">&Sigma;</button></br>
+                    <button id="reset_markers_location_button" title="Refresh markers positions..." style="width:100%;" class="btn info">&#8634;</button></br>
                 </div>
             </div>
 

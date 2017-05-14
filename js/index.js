@@ -245,7 +245,8 @@ function initialize() {
   	              event.overlay.setMap(null);
   	        });
   	    } else if (event.type == "marker") {
-  	    	alert("TODO : adding markers...");
+  	    	//alert("TODO : adding markers...");
+          add_marker(event);
   	    }
   });
   
@@ -261,4 +262,10 @@ google.maps.event.addDomListener(window, 'load', initialize);
 //create a filter text entry
 //$("#overlay").prepend("<input type='text' placeholder='search...' style='width:100%;height:50px;'></input>")
 
+function add_marker(event) {
+  var lat = event.overlay.position.lat();
+  var lng = event.overlay.position.lng();
+
+  $("#addMarker").modal("show");
+}
 
