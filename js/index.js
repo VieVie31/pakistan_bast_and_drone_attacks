@@ -267,8 +267,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
 function add_marker(event) {
   var lat = event.overlay.position.lat();
   var lng = event.overlay.position.lng();
-  var id = markers.length+1;
-  
+  var id = markers.length;
+
   $("#addMarker").modal("show");
 
   var new_marker = [{
@@ -287,9 +287,5 @@ function add_marker(event) {
     "religious_target":"",
     "type_attack":""
   }];
-
-  console.log(localStorage.getItem("pakpak_custom_dataset_"+id));
-  localStorage.setItem("pakpak_custom_dataset_" + id, JSON.stringify(new_marker));
-  console.log(localStorage.getItem("pakpak_custom_dataset_"+id));
+  markers.push(new_marker);
 }
-

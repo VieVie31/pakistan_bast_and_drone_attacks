@@ -61,25 +61,17 @@ function change_values(index) {
 }
 
 function save_local() {
-	var lst = [];
-	for (var i = 0; i < markers.length; i++) {
-		var m = JSON.stringify(markers[i]);
-		lst[i] = JSON.parse(JSON.stringify(m));
-		localStorage.setItem("pakpak_custom_dataset"+i, JSON.stringify(lst[i]));
-	};
-	localStorage.setItem("pakpak_custom_dataset", lst);
-	//console.log(localStorage);
-	//console.log(localStorage.getItem("pakpak_original_dataset"));
+	localStorage.setItem("pakpak_custom_dataset", JSON.stringify(markers));
 }
 
 function delete_marker(index) {
+	markerObjects[index].setMap(null);
 	markers[index] = "";
 	for (var i = index+1; i<markers.length; i++){
 		markers[i][""] = markers[i][""]-1;
 		markers[i]["S#"] = markers[i]["S#"]-1; 
 	}
 	save_local();
-	console.log(markers[index]);
 }
 
 function addMarker() {
@@ -92,22 +84,123 @@ function addMarker() {
 	var terro = $("#terro").val();
 	var target_type = $("#select_target_type").val();
 	var religious_target_type = $("#select_religious_type").val();
+
 	console.log(type_attack,date,day_type,city,killed,injured,terro,target_type,religious_target_type);
 
-	var m = [markers.length-1];
+	var m = markers[markers.length-1];
 	m["City"] = city;
     m["day"]=jourDeLaSorciere(date.getDay()),
     m["Blast Day Type"]=day_type;
-    m["timestamp"]=day.getTime(),
+    m["timestamp"]=date.getTime(),
     m["nb_killed"]=killed;
-    m["nb_injured"]=nb_injured;
+    m["nb_injured"]=injured;
     m["nb_terro"]=terro;
     m["target_type"]=target_type;
-    m["religious_target"]=religious_target;
-    m["type_attack"]=target_type;
+    m["religious_target"]=religious_target_type;
+    m["type_attack"]=type_attack;
 
+    setPin();
+    markerObjects[markers.length-1].setMap(map);
     save_local();
 }
+
+function setPin() {
+	var data = markers[markers.length-1];
+	var myLatlng = new google.maps.LatLng(
+        parseFloat(data.Latitude)  + (Math.random() / 1000), //add very small random value to net get all points at the same place...
+        parseFloat(data.Longitude) + (Math.random() / 1000)
+      );
+	
+	var infos = make_info(data, markers.length-1);
+
+	var administration = null;
+      if (data.type_attack == "blast") { //suicide_attacks
+	      if (data.timestamp < 979945200)//clinton administration
+	        administration = "./img/bomb_red.png";
+	      else if (data.timestamp > 979945200 && data.timestamp < 1232406000)//bush administation
+	        administration = "./img/bomb_blue.png"; //republican
+	      else if (data.timestamp > 1232406000 && data.timestamp < 1484866800)//obama administration
+	        administration = "./img/bomb_red.png";
+	      else //trump administration
+	        administration = "./img/bomb_blue.png";
+      } else if (data.type_attack == "drone") { //drone_attacks
+      	  if (data.timestamp < 979945200)//clinton administration
+	        administration = "./img/drone_red.png";
+	      else if (data.timestamp > 979945200 && data.timestamp < 1232406000)//bush administation
+	        administration = "./img/drone_blue.png"; //republican
+	      else if (data.timestamp > 1232406000 && data.timestamp < 1484866800)//obama administration
+	        administration = "./img/drone_red.png";
+	      else //trump administration
+	        administration = "./img/drone_blue.png";
+      }
+      var pinImage = new google.maps.MarkerImage(administration);
+
+      // marker object for the marker
+      var marker = new google.maps.Marker({
+        draggable: true, //make it movable
+        data: data,
+        position: myLatlng,
+        map: map,
+        title: data.Location,
+        //animation: google.maps.Animation.DROP,
+        opacity: 0.5,
+        icon: pinImage,
+        scaledSize: new google.maps.Size(12, 12)
+      });
+
+      //the pop up containing the infos
+      var infowindow = new google.maps.InfoWindow({
+        content: infos
+      });
+
+
+      // store in a global array
+      var markerIndex = markerObjects.push(marker) - 1;
+
+      //change the marker opacity when hovering it...
+      google.maps.event.addListener(markerObjects[markerIndex], 'mouseover', function() {
+      	this.setOpacity(1);
+      });
+
+      google.maps.event.addListener(markerObjects[markerIndex], 'mouseout', function() {
+      	this.setOpacity(0.5);
+      });
+
+      // click listener on a marker itself
+      google.maps.event.addListener(markerObjects[markerIndex], 'click', function() {
+        var marker = this;
+        if (marker.getAnimation() != null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+          //display the infos
+          infowindow.open(map, marker);
+        }
+      });
+
+      var $row = $('<div>')
+      .attr('id', 'id_lst_' + data["S#"] + '_' + data.type_attack)
+      .addClass('list-group-item')
+      .html(data.Location)
+      .on('mouseenter', function() {
+        var marker = markerObjects[markerIndex];
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+      })
+      .on('mouseleave', function() {
+        var marker = markerObjects[markerIndex];
+        if (marker.getAnimation() != null) {
+          marker.setAnimation(null);
+        }
+      })
+      .on('click', function() {
+        var marker = markerObjects[markerIndex];
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        infowindow.open(map, marker);
+      });
+
+      $row.appendTo('#overlay');
+}
+
 //jeu de mot lol
 function jourDeLaSorciere(d) {
 	switch(d) {
