@@ -1,5 +1,5 @@
 google.charts.load('current', {packages: ['corechart', 'bar','annotatedtimeline']});
-google.charts.setOnLoadCallback(timeChart)
+google.charts.setOnLoadCallback(timeChart);
 
 function utcformat(d) {
   d = new Date(d);
@@ -11,7 +11,6 @@ function utcformat(d) {
       D[i]= '0'+D[i];
   }
   d =new Date(D[0],D[1],D[2]);
-  console.log(d);
   return d
 }
 
@@ -29,39 +28,37 @@ function jpp(m) {
         
      
 
-        var l = [['DATE', 'people killed by terrorist', 'people killed by american']].concat(li);
+        //var l = [['DATE', 'people killed by terrorist', 'people killed by american',]].concat(li);
         
-        return l;
+        return li;
         
       }
 
-      function timeChart() {
+function timeChart() {
         var ma = get_visible_markers();
- 
-        var data = google.visualization.arrayToDataTable(jpp(ma));
-
+        var data =new  google.visualization.DataTable();
+        data.addColumn('date', 'Date');
+        data.addColumn('number','people killed by terrorist');
+        data.addColumn('number','people killed by american');
+        data.addRows(jpp(ma));
         var options = {
           title: 'TERRORRISTE',
           hAxis: {title: 'date',  titleTextStyle: {color: '#333'}},
           vAxis: {minValue: 0},
-          animation:{
-            duration: 1000,
-            easing: 'linear',
-            startup: true
-          },
-          height: 600,
+          height: window.innerHeight,
           width: window.innerWidth,
           theme: 'material',
           title: 'Company Performance',
-        explorer: { 
-        actions: ['dragToZoom', 'rightClickToReset'],
-        axis: 'horizontal',
-        keepInBounds: true,
-        maxZoomIn: 4.0
-}
+          displayAnnotations: true,
+            explorer: { 
+              actions: ['dragToZoom', 'rightClickToReset'],
+              axis: 'horizontal',
+              keepInBounds: true,
+              maxZoomIn: 4.0
+            }
         };
         var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('time_chart'));
-        chart.draw(data, {displayAnnotations: true});
+        chart.draw(data, options);
       }
 
 function refresh_piechart() {
