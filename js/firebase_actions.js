@@ -51,7 +51,9 @@ function change_values(index) {
 		//TODO: reset the old value
 		return;
 	}
-	markers[index].timestamp = new Date(''+day+'/'+month+'/'+year).getTime() / 1000;
+	markers[index].timestamp = '' + Math.round(new Date(year, month, day).getTime() / 1000);
+	//TODO: change the day of the week!!
+	//TODO: change the icone !!
 	//city
 	var v = $("#city_" + index).val().trim();
 	if ('' + v) markers[index].City = v;
