@@ -29,11 +29,49 @@ function change_values(index) {
 		$("#nb_terro_" + index).val(markers[index].nb_terro);
 		return;
 	}
+	localStorage.setItem("pakpak_custom_dataset_" + markers[index], JSON.stringify(markers[index]));
 }
 
 var markers_to_save_online = [];
 var markers_to_save_online_hashes = [];
 var last_uid = null;
+
+function save_local(markers) {
+	var lst = [];
+	for (var i = 0; i < markers.length; i++) {
+		var m = JSON.stringify(markers[i]);
+		lst[i] = JSON.parse(JSON.stringify(m));
+		localStorage.setItem("pakpak_custom_dataset", JSON.stringify(lst[i]));
+	};
+	localStorage.setItem("pakpak_custom_dataset", lst);
+	//console.log(localStorage);
+	//console.log(localStorage.getItem("pakpak_original_dataset"));
+}
+
+function delete_marker(index) {
+	for (int i = index+1; i<markers.length; i++){
+		markers[i][""] = markers[i][""]-1;
+		markers[i]["S#"] = markers[i]["S#"]-1; 
+	}
+	markers[index] = "";
+	save_local(markers);
+	console.log(markers[index]);
+}
+
+function addMarker() {
+	var type_attack = $("#select_attack_type").val();
+	var date = $("#date").val();
+	var day_type = $("#day_type").val();
+	var city = $("#city").val();
+	var killed = $("#killed").val();
+	var injured = $("#injured").val();
+	var terro = $("#terro").val();
+	var target_type = $("#select_target_type").val();
+	var religious_target_type = $("#select_religious_type").val();
+	console.log(type_attack,date,day_type,city,killed,injured,terro,target_type,religious_target_type);
+
+}
+
 function save_my_markers(markers, online) {
 	last_uid = current_user.uid;
 	var lst = [];
@@ -99,12 +137,12 @@ function save_my_markers(markers, online) {
 		//push each marker online if not exists
 		markers_to_save_online = lst;
 		markers_to_save_online_hashes = lst_hashes;
-		console.log(markers_to_save_online_hashes);
+		//console.log(markers_to_save_online_hashes);
 		for (var i = 0; i < markers_to_save_online.length; i++) {
 			var database = firebase.database();
 			var ref = database.ref('markers_pool/' + markers_to_save_online_hashes[i]);
 
-			console.log("" + i + "_" + markers_to_save_online_hashes[i]);
+		//	console.log("" + i + "_" + markers_to_save_online_hashes[i]);
 
 			//TODO: check if exists before to upload...
 			ref.set({marker : markers_to_save_online[i]});
