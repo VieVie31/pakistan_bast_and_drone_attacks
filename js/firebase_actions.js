@@ -49,6 +49,75 @@ function change_values(index) {
 		$("#nb_terro_" + index).val(markers[index].nb_terro);
 		return;
 	}
+	save_local();
+}
+
+function save_local() {
+	var lst = [];
+	for (var i = 0; i < markers.length; i++) {
+		var m = JSON.stringify(markers[i]);
+		lst[i] = JSON.parse(JSON.stringify(m));
+		localStorage.setItem("pakpak_custom_dataset"+i, JSON.stringify(lst[i]));
+	};
+	localStorage.setItem("pakpak_custom_dataset", lst);
+	//console.log(localStorage);
+	//console.log(localStorage.getItem("pakpak_original_dataset"));
+}
+
+function delete_marker(index) {
+	markers[index] = "";
+	for (var i = index+1; i<markers.length; i++){
+		markers[i][""] = markers[i][""]-1;
+		markers[i]["S#"] = markers[i]["S#"]-1; 
+	}
+	save_local();
+	console.log(markers[index]);
+}
+
+function addMarker() {
+	var type_attack = $("#select_attack_type").val();
+	var date = new Date($("#date").val());
+	var day_type = $("#day_type").val();
+	var city = $("#city").val();
+	var killed = $("#killed").val();
+	var injured = $("#injured").val();
+	var terro = $("#terro").val();
+	var target_type = $("#select_target_type").val();
+	var religious_target_type = $("#select_religious_type").val();
+	console.log(type_attack,date,day_type,city,killed,injured,terro,target_type,religious_target_type);
+
+	var m = [markers.length-1];
+	m["City"] = city;
+    m["day"]=jourDeLaSorciere(date.getDay()),
+    m["Blast Day Type"]=day_type;
+    m["timestamp"]=day.getTime(),
+    m["nb_killed"]=killed;
+    m["nb_injured"]=nb_injured;
+    m["nb_terro"]=terro;
+    m["target_type"]=target_type;
+    m["religious_target"]=religious_target;
+    m["type_attack"]=target_type;
+
+    save_local();
+}
+//jeu de mot lol
+function jourDeLaSorciere(d) {
+	switch(d) {
+		case 0 : return "Monday";
+				break;
+		case 1 : return "Tuesday";
+				break;
+		case 2 : return "Wednesday";
+				break;
+		case 3 : return "Thursday";
+				break;
+		case 4 : return "Friday";
+				break;
+		case 5 : return "Saturday";
+				break;
+		case 6 : return "Sunday";
+				break;
+	}
 }
 
 function save_my_markers(markers, online) {

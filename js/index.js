@@ -59,7 +59,7 @@ function make_info(data, index_of_data) {
 
   '</table>'+
 
-
+  '<button onclick="delete_marker('+ index_of_data +');">delete</button>' + 
   '<button onclick="console.log(' + index_of_data + ');">index</button>' + 
 /*
   (
@@ -265,7 +265,29 @@ google.maps.event.addDomListener(window, 'load', initialize);
 function add_marker(event) {
   var lat = event.overlay.position.lat();
   var lng = event.overlay.position.lng();
-
+  var id = markers.length+1;
+  
   $("#addMarker").modal("show");
+
+  var new_marker = [{
+    "":parseInt(id-1),
+    "S#":parseInt(id),
+    "Blast Day Type":"",
+    "City":"",
+    "Latitude": parseFloat(lat),
+    "Longitude": parseFloat(lng),
+    "day":"",
+    "timestamp":"",
+    "nb_killed":"",
+    "nb_injured":"",
+    "nb_terro":"",
+    "target_type":"",
+    "religious_target":"",
+    "type_attack":""
+  }];
+
+  console.log(localStorage.getItem("pakpak_custom_dataset_"+id));
+  localStorage.setItem("pakpak_custom_dataset_" + id, JSON.stringify(new_marker));
+  console.log(localStorage.getItem("pakpak_custom_dataset_"+id));
 }
 

@@ -81,6 +81,10 @@
         else 
             markers = JSON.parse(markers);
 
+        var markerTmp = localStorage.getItem("pakpak_custom_dataset");
+        if (markerTmp && markerTmp != "null")
+            markers = JSON.parse(markerTmp);
+
         //defining a hashfunction for string...
         String.prototype.hashCode = function() {
             var hash = 0, i, chr;
@@ -101,7 +105,7 @@
         }
     </script>
 
-    <!-- adding a new marker modal window -->
+     <!-- adding a new marker modal window -->
     <div id="addMarker" class="modal fade" role="dialog">
       <div class="modal-dialog">
 
@@ -130,32 +134,32 @@
 
                 <tr>
                     <td>Date</td>
-                    <td><input type="date" class="form-control" value="Working day"></td>
+                    <td><input id="date" type="date" class="form-control" value="Working day"></td>
                 </tr>
 
                 <tr>
                     <td>Day type</td>
-                    <td><input type="text" class="form-control" value="Working day"></td>
+                    <td><input id="day_type" type="text" class="form-control" value="Working day"></td>
                 </tr>
 
                 <tr>
                     <td>City</td>
-                    <td><input type="text" class="form-control" placeholder="city..." required></td>
+                    <td><input id="city" type="text" class="form-control" placeholder="city..." required></td>
                 </tr>
 
                 <tr>
                     <td>#KILLED</td>
-                    <td><input type="text" class="form-control" placeholder="nb killed..." required></td>
+                    <td><input id="killed" type="text" class="form-control" placeholder="nb killed..." required></td>
                 </tr>
 
                 <tr>
                     <td>#INJURED</td>
-                    <td><input type="text" class="form-control" placeholder="nb injured..." required></td>
+                    <td><input id="injured" type="text" class="form-control" placeholder="nb injured..." required></td>
                 </tr>
 
                 <tr>
                     <td>#NB_TERRO</td>
-                    <td><input type="text" class="form-control" placeholder="nb terrorists/kamikases..." required></td>
+                    <td><input id="terro" type="text" class="form-control" placeholder="nb terrorists/kamikases..." required></td>
                 </tr>
 
                 <tr>
@@ -192,12 +196,13 @@
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">MAKE IT !</button>
+            <button type="button" class="btn btn-default"  data-dismiss="modal">MAKE IT !</button>
           </div>
         </div>
 
       </div>
     </div>
+
 
     <div class="container-fluid">
         <br/>
