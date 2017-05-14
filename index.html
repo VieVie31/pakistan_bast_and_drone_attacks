@@ -62,6 +62,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js"></script>
     <script src="./js/gridstack.js"></script>
     <script src="./js/gridstack.jQueryUI.js"></script>
+    <!-- rss reader -->
+    <script type="text/javascript" src="http://momentjs.com/downloads/moment-with-langs.min.js"></script>
+    <script type="text/javascript" src="js/FeedEk.js"></script>
 </head>
 <body>
     <!-- load the delault markers -->
@@ -210,7 +213,7 @@
             </div>
 
             <!-- filters -->
-            <div class="grid-stack-item" data-gs-x="0" data-gs-y="6" data-gs-width="9" data-gs-height="3">
+            <div class="grid-stack-item" data-gs-x="0" data-gs-y="6" data-gs-width="8" data-gs-height="3">
                 <div class="grid-stack-item-content">
                     <div id="builder-basic"></div>
                 </div>
@@ -247,13 +250,22 @@
             </div>
 
             <!-- the list of incidents -->
-            <div class="grid-stack-item" data-gs-x="9" data-gs-y="0" data-gs-width="3" data-gs-height="9">
+            <div class="grid-stack-item" data-gs-x="9" data-gs-y="0" data-gs-width="3" data-gs-height="6">
                 <div class="grid-stack-item-content">
                     <!-- <input placeholder="search" style="width:100%;height:40px;text-align:left;"></input> -->
                     <div id="overlay" class="list-group"></div>
                 </div>
             </div>
-            
+
+            <!-- rss news -->
+            <div class="grid-stack-item" data-gs-x="9" data-gs-y="10" data-gs-width="4" data-gs-height="3">
+                <div class="grid-stack-item-content">
+                    <div id="divRss"></div>
+                    <!-- <iframe src="https://feed.mikle.com/widget/v2/27808/" style="width: 100%; height: 100%"></iframe> -->
+                    <!-- <iframe src="https//rss.bloople.net/?url=https%3A%2F%2Fnews.google.com%2Fnews%3Foutput%3Drss%26q%3Dpakistan%2Bdrone%2Battack&showtitle=false&type=html"></iframe> -->
+                </div>
+            </div>
+
         </div>
         <br/>
     </div>
@@ -297,8 +309,6 @@
         </div>
 
         <div id="div4">
-            timeline like</br>
-            laisser l'utilisateur trouver des correlations entre 2 variables (DTW) avec comme axe commun le temps
         </div>
     </div>
 
@@ -310,6 +320,16 @@
     <script src="js/filter_gui.js"></script>
     <script src="js/charts.js"></script>
     <script>
+
+$(document).ready(function(){
+    $('#divRss').FeedEk({
+      FeedUrl : 'https://news.google.com/news?output=rss&q=pakistan+drone+attack',
+      ShowDesc: false,
+      MaxCount: 100
+    });
+});
+
+
     original_markers = markers;
 
     //fixing the stats div positionning problem...
