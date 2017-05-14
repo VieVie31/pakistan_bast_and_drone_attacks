@@ -62,9 +62,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js"></script>
     <script src="./js/gridstack.js"></script>
     <script src="./js/gridstack.jQueryUI.js"></script>
-    <!-- rss reader -->
-    <script type="text/javascript" src="http://momentjs.com/downloads/moment-with-langs.min.js"></script>
-    <script type="text/javascript" src="js/FeedEk.js"></script>
 </head>
 <body>
     <!-- load the delault markers -->
@@ -260,9 +257,22 @@
             <!-- rss news -->
             <div class="grid-stack-item" data-gs-x="9" data-gs-y="10" data-gs-width="4" data-gs-height="3">
                 <div class="grid-stack-item-content">
-                    <div id="divRss"></div>
-                    <!-- <iframe src="https://feed.mikle.com/widget/v2/27808/" style="width: 100%; height: 100%"></iframe> -->
-                    <!-- <iframe src="https//rss.bloople.net/?url=https%3A%2F%2Fnews.google.com%2Fnews%3Foutput%3Drss%26q%3Dpakistan%2Bdrone%2Battack&showtitle=false&type=html"></iframe> -->
+                    <div class="container" style="width: 100%; height: 100%">
+                      <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#drone_rss">Drone Attacks</a></li>
+                        <li><a data-toggle="tab" href="#blast_rss">Blast Attacks</a></li>
+                      </ul>
+
+                      <div class="tab-content">
+                        <div id="drone_rss" class="tab-pane fade in active">
+                          <iframe src="https://feed.mikle.com/widget/v2/27817/" style="width: 100%; height: 100%"></iframe> 
+                        </div>
+                        
+                        <div id="blast_rss" class="tab-pane fade">
+                          <iframe src="https://feed.mikle.com/widget/v2/27808/" style="width: 100%; height: 100%"></iframe>
+                        </div>
+                      </div>
+                    </div>
                 </div>
             </div>
 
@@ -320,16 +330,6 @@
     <script src="js/filter_gui.js"></script>
     <script src="js/charts.js"></script>
     <script>
-
-$(document).ready(function(){
-    $('#divRss').FeedEk({
-      FeedUrl : 'https://news.google.com/news?output=rss&q=pakistan+drone+attack',
-      ShowDesc: false,
-      MaxCount: 100
-    });
-});
-
-
     original_markers = markers;
 
     //fixing the stats div positionning problem...
