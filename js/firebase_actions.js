@@ -123,18 +123,41 @@ function delete_marker(index) {
 function addMarker() {
 	var type_attack = $("#select_attack_type").val();
 	var date = new Date($("#date").val());
+	if (date == "Invalid Date") {
+		toastr.error("Invalid date");
+		//event.overlay.setMap(null);
+		return;
+	}
+
 	var day_type = $("#day_type").val();
 	var city = $("#city").val();
+	if (city == "") {
+		toastr.error("city name should not be empty !! :'(");
+		//event.overlay.setMap(null);
+		return;
+	}
 	var killed = $("#killed").val();
+	if (killed == "" || killed < 0 ) {
+		toastr.error("The only 'Integer' accepted for killed!!");
+		//event.overlay.setMap(null);
+		return;
+	}
 	var injured = $("#injured").val();
+	if (injured == "" || injured < 0 ) {
+		toastr.error("The only 'Integer' accepted for injured!!");
+		//event.overlay.setMap(null);
+		return;
+	}
 	var terro = $("#terro").val();
+	if (terro == "" || terro < 0 ) {
+		toastr.error("The only 'Integer' accepted for terrorists!!");
+		//event.overlay.setMap(null);
+		return;
+	}
 	var target_type = $("#select_target_type").val();
 	var religious_target_type = $("#select_religious_type").val();
-	console.log(type_attack,date,day_type,city,killed,injured,terro,target_type,religious_target_type);
 
 	var m = markers[markers.length-1];
-
-	var m = [markers.length-1];
 	m["City"] = city;
     m["day"]=jourDeLaSorciere(date.getDay()),
     m["Blast Day Type"]=day_type;
