@@ -143,11 +143,6 @@ function addMarker() {
 	}
 
 	var loc = $("#loc").val();
-	if (loc == "") {
-		toastr.error("location should not be empty !! :'(");
-		marker_event.overlay.setMap(null);
-		return;
-	}
 
 	var killed = $("#killed").val();
 	if (killed == "" || killed < 0 ) {
@@ -182,8 +177,10 @@ function addMarker() {
     m["target_type"]=target_type;
     m["religious_target"]=religious_target_type;
     m["type_attack"]=type_attack;
-    m["Location"]=city + ", " + loc;
-
+    if (loc != "")
+    	m["Location"]=city + ", " + loc;
+    else 
+    	m["Location"]=city;
     m.Latitude = '' + lat;
     m.Longitude = '' + lng;
 
