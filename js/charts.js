@@ -39,7 +39,15 @@ function timeChart() {
         var options = {
           title: 'Company Performance',
           curveType: 'function',
-          legend: { position: 'bottom' }
+          legend: { position: 'right' },
+          height: parseInt($("#div4").css("height")),
+          width: parseInt($("#div4").css("width")),
+          explorer: { 
+              actions: ['dragToZoom', 'rightClickToReset'],
+              axis: ['horizontal', 'vertical'],
+              keepInBounds: true,
+              maxZoomIn: 4.0
+          }
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('chartTime'));
