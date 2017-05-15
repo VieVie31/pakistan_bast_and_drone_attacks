@@ -200,6 +200,10 @@ function addMarker() {
     save_local();
 }
 
+function saveNotes() {
+	localStorage.setItem("personnal_notes", $("#notes").val());
+}
+
 function setPin() {
        var data = markers[markers.length-1];
        var myLatlng = new google.maps.LatLng(
