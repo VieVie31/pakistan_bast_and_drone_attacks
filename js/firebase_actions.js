@@ -141,6 +141,14 @@ function addMarker() {
 		marker_event.overlay.setMap(null);
 		return;
 	}
+
+	var loc = $("#loc").val();
+	if (loc == "") {
+		toastr.error("location should not be empty !! :'(");
+		marker_event.overlay.setMap(null);
+		return;
+	}
+
 	var killed = $("#killed").val();
 	if (killed == "" || killed < 0 ) {
 		toastr.error("The only 'Integer' accepted for killed!!");
@@ -174,7 +182,7 @@ function addMarker() {
     m["target_type"]=target_type;
     m["religious_target"]=religious_target_type;
     m["type_attack"]=type_attack;
-    m["Location"]=city + " " + type_attack;
+    m["Location"]=city + ", " + loc;
 
     m.Latitude = '' + lat;
     m.Longitude = '' + lng;
