@@ -304,21 +304,23 @@
         </div>
         
         <div id="div3">
-            <select id="field1" onchange="refresh_piechart()">
-                <option value="Blast Day Type">Blast Day Type</option>
-                <option value="City">City</option>
-                <option value="day">day</option>
-                <option value="religious_target">religious_target</option>
-                <option value="target_type">target_type</option>
-                <option value="type_attack">type_attack</option>
-            </select>
+            <center>
+                <select id="field1" onchange="refresh_piechart()">
+                    <option value="Blast Day Type">Blast Day Type</option>
+                    <option value="City">City</option>
+                    <option value="day">day</option>
+                    <option value="religious_target">religious_target</option>
+                    <option value="target_type">target_type</option>
+                    <option value="type_attack">type_attack</option>
+                </select>
 
-            <select id="field2" onchange="refresh_piechart()">
-                <option value="nb_injured">nb_injured</option>
-                <option value="nb_kamikaze">nb_kamikaze</option>
-                <option value="nb_killed">nb_killed</option>
-                <option value="nb_terro">nb_terro</option>                
-            </select>
+                <select id="field2" onchange="refresh_piechart()">
+                    <option value="nb_injured">nb_injured</option>
+                    <option value="nb_kamikaze">nb_kamikaze</option>
+                    <option value="nb_killed">nb_killed</option>
+                    <option value="nb_terro">nb_terro</option>                
+                </select>
+            </center>
 
             <div id="piechart" style="width: 80%; height: 100%;"></div>
         </div>
@@ -373,6 +375,11 @@
     $("#piechart").css("left", "10%");
     $("#div4").css("top", "50%");
     $("#div4").css("left", "50%");
+
+    $("#div1").css("background", "white");
+    $("#div2").css("background", "white");
+    $("#div3").css("background", "white");
+    $("#div4").css("background", "white");
 
 
     //setting toastr

@@ -154,10 +154,10 @@ table, th, td {
   float: left; 
 }
 
-#div1 { background: #DDD; }
-#div2 { background: #AAA; }
-#div3 { background: #777; }
-#div4 { background: #444; }
+#div1 { background: #FFF; }
+#div2 { background: #FFF; }
+#div3 { background: #FFF; }
+#div4 { background: #FFF; }
 
 #divRss {
   text-align: left;
