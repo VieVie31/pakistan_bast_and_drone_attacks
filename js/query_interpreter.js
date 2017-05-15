@@ -63,6 +63,9 @@ function filter_conditon_and(rules, data) { //rules is a list of rules
         case "CITY":
             result_current_rule = filter_city(current_rule, data);
             break;
+        case "DESCRIPTION":
+            result_current_rule = filter_description(current_rule, data);
+            break;
         default: //undefined --> new group of rules
             if (current_rule.condition == "AND")
                 result_current_rule = filter_conditon_and(current_rule.rules, data);
@@ -108,6 +111,9 @@ function filter_conditon_or(rules, data) { //rules is a list of rules
         case "CITY":
             result_current_rule = filter_city(current_rule, data);
             break;
+        case "DESCRIPTION":
+            result_current_rule = filter_description(current_rule, data);
+            break;
         default: //undefined --> new group of rules
             if (current_rule.condition == "AND")
                 result_current_rule = filter_conditon_and(current_rule.rules, data);
@@ -120,13 +126,23 @@ function filter_conditon_or(rules, data) { //rules is a list of rules
     }
 }
 
+function filter_description(r, data) {
+     if (r.operator == "contains") {
+        var txt = r.value.trim().toLowerCase();
+        return data.City.toLowerCase().indexOf(txt) >= 0
+    } else { //not equal
+        var txt = r.value.trim().toLowerCase();
+        return data.City.toLowerCase().indexOf(txt) < 0
+    }
+}
+
 function filter_city(r, data) {
      if (r.operator == "contains") {
-        var txt = r.value.trim();
-        return data.City.indexOf(txt) >= 0
+        var txt = r.value.trim().toLowerCase();
+        return data.City.toLowerCase().indexOf(txt) >= 0
     } else { //not equal
-        var txt = r.value.trim();
-        return data.City.indexOf(txt) < 0
+        var txt = r.value.trim().toLowerCase();
+        return data.City.toLowerCase().indexOf(txt) < 0
     }
 }
 

@@ -55,7 +55,13 @@ $('#builder-basic').queryBuilder({
   label: "CITY",
   type: "string",
   operators: ["contains", "not_contains"]
-},          
+},  
+/*{
+  id: "DESCRIPTION",
+  label: "DESCRIPTION",
+  type: "string",
+  operators: ["contains", "not_contains"]
+},  */       
 {
   id: "NB_KILLED",
   label: "NB_KILLED",
