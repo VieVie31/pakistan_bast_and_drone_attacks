@@ -26,7 +26,7 @@ function listeTime(m) {
               liste.push([utcformat(parseInt(m[i].timestamp)*1000),0,parseInt(m[i].nb_killed)]);
             }
           }
-  
+  liste.sort();
   return [["Date","blast attack","drone attack"]].concat(liste)
 }
 
