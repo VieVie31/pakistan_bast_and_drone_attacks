@@ -174,6 +174,7 @@ function addMarker() {
     m["target_type"]=target_type;
     m["religious_target"]=religious_target_type;
     m["type_attack"]=type_attack;
+    m["Location"]=city + " " + type_attack;
 
     m.Latitude = '' + lat;
     m.Longitude = '' + lng;

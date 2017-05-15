@@ -275,7 +275,7 @@ function add_marker(event) {
   
   $("#addMarker").modal("show");
 
-  var new_marker = [{
+  var new_marker = {
     "":parseInt(id-1),
     "S#":parseInt(id),
     "Blast Day Type":"",
@@ -290,7 +290,7 @@ function add_marker(event) {
     "target_type":"",
     "religious_target":"",
     "type_attack":""
-  }];
+  };
 
   markers.push(new_marker);
 }
