@@ -1,4 +1,6 @@
 google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback(timeChart);
+
 
 
 function refresh_piechart() {
@@ -13,6 +15,37 @@ function refresh_piechart() {
   var stats_on_visible_marker = getCount(f1Val, f2Val, get_visible_markers());
   drawChart(stats_on_visible_marker,f1Val,f2Val);
 }
+
+function listeTime(m) {
+  var liste = [];
+  for (var i = 0; i < m.length; i++) {
+     if (m[i].type_attack=='blast'){
+              liste.push([utcformat(parseInt(m[i].timestamp)*1000),parseInt(m[i].nb_killed),0]);
+            }
+            else{
+              liste.push([utcformat(parseInt(m[i].timestamp)*1000),0,parseInt(m[i].nb_killed)]);
+            }
+          }
+  
+  return [["Date","blast attack","drone attack"]].concat(liste)
+}
+
+function timeChart() {
+        var da = get_visible_markers();
+        
+
+        var data = google.visualization.arrayToDataTable(listeTime(da));
+
+        var options = {
+          title: 'Company Performance',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chartTime'));
+
+        chart.draw(data, options);
+      }
 
 function refresh_day() {
   var f3 = document.getElementById("field3");
@@ -154,4 +187,5 @@ function refresh_graphs() {
     Bubble_city();
     refresh_piechart();
     refresh_day();
+    timeChart();
 } 
