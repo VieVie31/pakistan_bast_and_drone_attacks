@@ -136,7 +136,7 @@ function Bubble_city() {
     hAxis: {title: 'civil killed or injured by drone'},
     vAxis: {title: 'civil killed or injured by terrorist'},
     bubble: {textStyle: {fontSize: 11}},
-    explorer: {},
+    explorer: { actions: ['dragToZoom', 'rightClickToReset']},
     colorAxis: {colors: ['yellow', 'red']},
     tooltip : {
         trigger: 'none'
