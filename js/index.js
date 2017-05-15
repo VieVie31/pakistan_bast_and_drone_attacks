@@ -49,14 +49,37 @@ function make_info(data, index_of_data) {
   '<td><input id="nb_terro_' + index_of_data + '" type="text" value="' + data.nb_terro + '" onchange="change_values(' + index_of_data + ');"></input></td>'+//' + data.nb_terro + '</td>'+
   '</tr>'+
 
+
+
   '<tr>'+
-  '<td>' + "TARGET TYPE" + '</td>'+
-  '<td>' + data.target_type + '</td>'+
+      '<td>'+ "TARGET TYPE" + '</td>'+
+          '<td>' +
+            '<select id="target_type_' +index_of_data+ '" style="width:100%" " onchange="change_values(' + index_of_data + ');">' +
+              (data.target_type == "Unknow" ? '<option value="Unknow" selected="selected">Unknow</option>' : '<option value="Unknow" >Unknow</option>')+
+              (data.target_type == "Civilian" ? '<option value="Civilian" selected="selected">Civilian</option>' : '<option value="Civilian" selected>Civilian</option>')+
+              (data.target_type == "Government" ? '<option value="Government" selected="selected">Government</option>' : '<option value="Government">Government</option>')+
+              (data.target_type == "Law" ? '<option value="Law" selected="selected">Law</option>' : '<option value="Law">Law</option>')+
+              (data.target_type == "Religious" ? '<option value="Religious" selected="selected">Religious</option>' : '<option value="Religious">Religious</option>')+
+              (data.target_type == "Army" ? '<option value="Army" selected="selected">Army</option>' : '<option value="Army">Army</option>')+
+              (data.target_type == "Foreign" ? '<option value="Foreign" selected="selected">Foreign</option>' : '<option value="Foreign">Foreign</option>')+
+              (data.target_type == "Terrorist" ? '<option value="Terrorist" selected="selected">Terrorist</option>' : '<option value="Terrorist">Terrorist</option>')+
+            '</select>'+
+      '</td>'+
   '</tr>'+
 
   '<tr>'+
-  '<td>' + "RELIGIOUS TARGET" + '</td>'+
-  '<td>' + data.religious_target + '</td>'+
+      '<td>'+ "RELIGIOUS TARGET" + '</td>'+
+          '<td>' +
+            '<select id="religious_target_' +index_of_data+ '" style="width:100%" " onchange="change_values(' + index_of_data + ');">' +
+              (data.religious_target == "None" ? '<option value="None" selected="selected">None</option>' : '<option value="None" >Unknow</option>')+
+              (data.religious_target == "Christian" ? '<option value="Christian" selected="selected">Christian</option>' : '<option value="Christian">Christian</option>')+
+              (data.religious_target == "Sunni" ? '<option value="Sunni" selected="selected">Sunni</option>' : '<option value="Sunni">Sunni</option>')+
+              (data.religious_target == "Ahmedi" ? '<option value="Ahmedi" selected="selected">Ahmedi</option>' : '<option value="Ahmedi">Ahmedi</option>')+
+              (data.religious_target == "Shiite" ? '<option value="Shiite" selected="selected">Shiite</option>' : '<option value="Shiite">Shiite</option>')+
+              (data.religious_target == "Jews" ? '<option value="Jews" selected="selected">Jews</option>' : '<option value="Jews">Jews</option>')+
+              (data.religious_target == "Extremist" ? '<option value="Extremist" selected="selected">Extremist</option>' : '<option value="Extremist">Extremist</option>')+
+            '</select>'+
+      '</td>'+
   '</tr>'+
 
   '</table>'+

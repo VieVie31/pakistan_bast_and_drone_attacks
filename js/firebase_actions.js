@@ -86,6 +86,25 @@ function change_values(index) {
 		$("#nb_terro_" + index).val(markers[index].nb_terro);
 		return;
 	}
+	//target type
+	var v = $("#target_type_" + index +" option:selected").val();
+	console.log(v);
+	if ('' + v) markers[index].target_type = v;
+	else {
+		toastr.error("target_type should not be empty !! :'(");
+		$("#target_type_" + index).val(markers[index].target_type);
+		return;
+	}
+	//religious target type
+	var v = $("#religious_target_" + index + " option:selected").val();
+	console.log(v);
+	if ('' + v) markers[index].religious_target = v;
+	else {
+		toastr.error("religious target should not be empty !! :'(");
+		$("#target_type_" + index).val(markers[index].religious_target);
+		return;
+	}
+	console.log(markers[index]);
 	save_local();
 }
 
