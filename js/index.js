@@ -62,12 +62,12 @@ function make_info(data, index_of_data) {
   '</table>'+
 
   '<button onclick="delete_marker('+ index_of_data +');">delete</button>' + 
-  '<button onclick="console.log(' + index_of_data + ');">index</button>' + 
+  '<button onclick="save_position(' + index_of_data + ');">save position</button>' + 
 /*
   (
-  	current_user != null 
-  	? '<button onchange="change_values(' + index_of_data + ');">Enregister les nouvelles valeurs</button>'
-  	: ''
+    current_user != null 
+    ? '<button onchange="change_values(' + index_of_data + ');">Enregister les nouvelles valeurs</button>'
+    : ''
   ) +
 */
   '</div>'+
@@ -114,25 +114,25 @@ function initialize() {
       var infos = make_info(data, i);
 
       //set different images : bomb = terrorist attacks, plane = drone attacks
-	  var administration = null;
+    var administration = null;
       if (data.type_attack == "blast") { //suicide_attacks
-	      if (data.timestamp < 979945200)//clinton administration
-	        administration = "./img/bomb_red.png";
-	      else if (data.timestamp > 979945200 && data.timestamp < 1232406000)//bush administation
-	        administration = "./img/bomb_blue.png"; //republican
-	      else if (data.timestamp > 1232406000 && data.timestamp < 1484866800)//obama administration
-	        administration = "./img/bomb_red.png";
-	      else //trump administration
-	        administration = "./img/bomb_blue.png";
+        if (data.timestamp < 979945200)//clinton administration
+          administration = "./img/bomb_red.png";
+        else if (data.timestamp > 979945200 && data.timestamp < 1232406000)//bush administation
+          administration = "./img/bomb_blue.png"; //republican
+        else if (data.timestamp > 1232406000 && data.timestamp < 1484866800)//obama administration
+          administration = "./img/bomb_red.png";
+        else //trump administration
+          administration = "./img/bomb_blue.png";
       } else if (data.type_attack == "drone") { //drone_attacks
-      	  if (data.timestamp < 979945200)//clinton administration
-	        administration = "./img/drone_red.png";
-	      else if (data.timestamp > 979945200 && data.timestamp < 1232406000)//bush administation
-	        administration = "./img/drone_blue.png"; //republican
-	      else if (data.timestamp > 1232406000 && data.timestamp < 1484866800)//obama administration
-	        administration = "./img/drone_red.png";
-	      else //trump administration
-	        administration = "./img/drone_blue.png";
+          if (data.timestamp < 979945200)//clinton administration
+          administration = "./img/drone_red.png";
+        else if (data.timestamp > 979945200 && data.timestamp < 1232406000)//bush administation
+          administration = "./img/drone_blue.png"; //republican
+        else if (data.timestamp > 1232406000 && data.timestamp < 1484866800)//obama administration
+          administration = "./img/drone_red.png";
+        else //trump administration
+          administration = "./img/drone_blue.png";
       }
       var pinImage = new google.maps.MarkerImage(administration);
 
@@ -160,11 +160,11 @@ function initialize() {
 
       //change the marker opacity when hovering it...
       google.maps.event.addListener(markerObjects[markerIndex], 'mouseover', function() {
-      	this.setOpacity(1);
+        this.setOpacity(1);
       });
 
       google.maps.event.addListener(markerObjects[markerIndex], 'mouseout', function() {
-      	this.setOpacity(0.5);
+        this.setOpacity(0.5);
       });
 
       // click listener on a marker itself
@@ -230,29 +230,29 @@ function initialize() {
   
   //TODO : define actions associated to the drawing manager, polygons and markers...
   google.maps.event.addListener(drawingManager, 'overlaycomplete', function(event) {
-  		if (event.type == "polygon"){
-  	        var polygon_id = 'AREA_' + (polygon_id_counter ++); //set an id to the polygon
-  	  
-  	        polygons_area_table[polygon_id] = event.overlay; //save the polygon in tha table...
-  	  
-  	        event.overlay.content = polygon_id;
-  	        event.overlay.infoWindow = new google.maps.InfoWindow;
-  	        event.overlay.infoWindow.setContent(event.overlay.content);
-  	  
-  	        google.maps.event.addListener(event.overlay, 'click', function(e) {
-  	              event.overlay.infoWindow.setPosition(e.latLng);
-  	              event.overlay.infoWindow.open(map);
-  	        });
-  	  
-  	        google.maps.event.addListener(event.overlay, 'rightclick', function() {
-  	              polygons_area_table[event.overlay.content] = null;
-  	              event.overlay.infoWindow.open(null);
-  	              event.overlay.setMap(null);
-  	        });
-  	    } else if (event.type == "marker") {
-  	    	//alert("TODO : adding markers...");
+      if (event.type == "polygon"){
+            var polygon_id = 'AREA_' + (polygon_id_counter ++); //set an id to the polygon
+      
+            polygons_area_table[polygon_id] = event.overlay; //save the polygon in tha table...
+      
+            event.overlay.content = polygon_id;
+            event.overlay.infoWindow = new google.maps.InfoWindow;
+            event.overlay.infoWindow.setContent(event.overlay.content);
+      
+            google.maps.event.addListener(event.overlay, 'click', function(e) {
+                  event.overlay.infoWindow.setPosition(e.latLng);
+                  event.overlay.infoWindow.open(map);
+            });
+      
+            google.maps.event.addListener(event.overlay, 'rightclick', function() {
+                  polygons_area_table[event.overlay.content] = null;
+                  event.overlay.infoWindow.open(null);
+                  event.overlay.setMap(null);
+            });
+        } else if (event.type == "marker") {
+          //alert("TODO : adding markers...");
           add_marker(event);
-  	    }
+        }
   });
   
   drawingManager.setMap(map);

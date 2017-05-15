@@ -89,6 +89,18 @@ function change_values(index) {
 	save_local();
 }
 
+function save_position(i) {
+	var m = markers[i];
+
+	var lat = markerObjects[i].position.lat();
+ 	var lng = markerObjects[i].position.lng();
+
+ 	m.Latitude = lat;
+ 	m.Longitude = lng;
+
+ 	save_local();
+}
+
 function save_local() {
 	localStorage.setItem("pakpak_custom_dataset", JSON.stringify(markers));
 
@@ -101,8 +113,7 @@ function save_local() {
 		}
 	};
 	localStorage.setItem("pakpak_custom_dataset", '[' + lst + ']');
-	//console.log(localStorage);
-	//console.log(JSON.parse(localStorage.getItem("pakpak_original_dataset")));
+	toastr.info("Markers localy saved...");
 }
 
 function delete_marker(index) {
@@ -322,6 +333,7 @@ function save_my_markers(markers, online) {
 		m["id"] = "" + id + "_" + m.type_attack;
 
 		lst[i] = m;
+
 	}
 
 	//offline saving the markers
