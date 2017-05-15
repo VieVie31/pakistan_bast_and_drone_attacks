@@ -266,8 +266,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 //create a filter text entry
 //$("#overlay").prepend("<input type='text' placeholder='search...' style='width:100%;height:50px;'></input>")
-
+var marker_event = null;
 function add_marker(event) {
+  marker_event = event;
   var lat = event.overlay.position.lat();
   var lng = event.overlay.position.lng();
   var id = markers.length;
